@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <title>Easy Nursing | Ahmed Shafaay</title>
+    
+    <!-- الخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+    <!-- مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    
+    <style>
+        /* ── التنسيقات العامة ── */
+        *{box-sizing:border-box;margin:0;padding:0}
+        html,body{min-height:100vh;font-family:'Tajawal',sans-serif;background:#0f0a1e;color:white}
+        .app{min-height:100vh;background:radial-gradient(ellipse at 20% 50%,#1a0533 0%,#0f0a1e 50%,#0a1628 100%);position:relative;overflow-x:hidden}
+        
+        /* الأوربات */
+        .orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+        .orb1{width:400px;height:400px;background:rgba(139,92,246,.15);top:-100px;right:-100px;animation:f1 8s ease-in-out infinite}
+        .orb2{width:300px;height:300px;background:rgba(59,130,246,.1);bottom:-50px;left:-50px;animation:f2 10s ease-in-out infinite}
+        .orb3{width:220px;height:220px;background:rgba(236,72,153,.07);top:40%;left:35%;animation:f3 6s ease-in-out infinite}
+        @keyframes f1{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,20px)}}
+        @keyframes f2{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
+        @keyframes f3{0%,100%{transform:translate(0,0)}50%{transform:translate(-15px,15px)}}
+
+        /* الشاشات - إصلاح الظهور والأنيميشن */
+        .screen{display:none;position:relative;z-index:10;min-height:100vh;padding:2rem 1.25rem;opacity:0}
+        .screen.active{display:flex;flex-direction:column;align-items:center;opacity:1;animation:up .4s ease forwards}
+        @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .max-w{width:100%;max-width:520px}
+
+        /* ── شبكة الشهور (الإضافة الجديدة) ── */
+        .months-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.75rem;width:100%}
+        
+        .month-card{background:rgba(255,255,255,.04);border:1px solid rgba(139,92,246,.2);border-radius:18px;padding:1.2rem .8rem;cursor:pointer;text-align:center;transition:all .3s ease}
+        .month-card:hover{background:rgba(139,92,246,.1);border-color:#a855f7;transform:translateY(-3px)}
+        .month-num{font-size:0.7rem;opacity:0.4;margin-bottom:4px}
+        .month-ar{font-size:0.8rem;opacity:0.6;margin-top:2px}
+
+        /* العناصر الأخرى */
+        .login-box{background:rgba(255,255,255,.05);border:1px solid rgba(139,92,246,.25);border-radius:24px;padding:2rem 1.75rem;width:100%;max-width:340px;text-align:center}
+        .pass-input{width:100%;padding:.9rem 1.1rem;background:rgba(139,92,246,.1);border:1.5px solid rgba(139,92,246,.3);border-radius:14px;color:white;text-align:center;letter-spacing:3px;margin-bottom:.75rem;outline:none}
+        .login-btn{width:100%;padding:.9rem;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:14px;color:white;font-weight:700;cursor:pointer}
+        
+        .page-header{display:flex;align-items:center;gap:.85rem;margin-bottom:2rem;width:100%}
+        .back-btn{width:44px;height:44px;min-width:44px;border-radius:14px;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#c4b5fd;cursor:pointer;display:flex;align-items:center;justify-content:center}
+        .page-title{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#e9d5ff,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+        .dept-card{background:rgba(255,255,255,.04);border:1px solid rgba(139,92,246,.2);border-radius:22px;padding:1.5rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:all .3s ease}
+        .dept-card:hover{background:rgba(139,92,246,.1);border-color:#a855f7}
+
+        .admin-badge{display:inline-flex;align-items:center;background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.25rem .75rem;font-size:.75rem;font-weight:700;color:#c4b5fd}
+        .logout-btn{padding:6px 16px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.4);border-radius:50px;color:#f87171;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.3s ease;display:inline-flex;align-items:center}
+        .logout-btn:hover{background:rgba(239,68,68,0.2);border-color:#ef4444;color:#fff}
+
+        .tabs{display:flex;gap:.6rem;margin-bottom:1.5rem;background:rgba(255,255,255,.03);border-radius:14px;padding:5px;width:100%}
+        .tab{flex:1;padding:.7rem;border:none;border-radius:10px;background:transparent;color:rgba(196,181,253,.6);cursor:pointer;font-weight:600}
+        .tab.active{background:linear-gradient(135deg,#7c3aed,#a855f7);color:white}
+        .item-card{background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.08)}
+
+        .loading-screen{position:fixed;inset:0;z-index:500;background:#0f0a1e;display:flex;flex-direction:column;align-items:center;justify-content:center}
+        .hidden{display:none!important}
+        .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:.7rem 1.4rem;border-radius:50px;display:none;z-index:3000;font-weight:bold;white-space:nowrap;background:#a855f7;color:white}
+        .toast.show{display:block}
+        
+        .welcome-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,10vw,4rem);font-weight:700;margin-bottom:1rem;text-align:center}
+        .welcome-photo-wrap{width:120px;height:120px;border-radius:50%;margin:0 auto 1rem;padding:3px;background:linear-gradient(135deg,#7c3aed,#a855f7,#ec4899);box-shadow:0 20px 60px rgba(139,92,246,.4)}
+        .welcome-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #0f0a1e}
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+    
+    <div class="loading-screen" id="loading-screen">
+        <div style="width:48px;height:48px;border:3px solid rgba(139,92,246,0.3);border-top-color:#a855f7;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:1.5rem"></div>
+        <div style="color:rgba(196,181,253,0.7)">بنمسي عليك.. لحظات</div>
+    </div>
+
+    <!-- شاشة الترحيب -->
+    <div class="screen" id="s-welcome">
+        <h1 class="welcome-title">Easy Nursing</h1>
+        <div class="welcome-photo-wrap">
+            <img class="welcome-photo" src="https://ui-avatars.com/api/?name=Ahmed+Shafaay&background=7c3aed&color=fff&size=200" alt="Ahmed Shafaay"/>
+        </div>
+        <div style="font-size:1.2rem;margin-bottom:1rem;font-weight:700">Ahmed Shafaay</div>
+        <p style="text-align:center; opacity:0.8; margin-bottom:2rem">اهلا بك في عالمي 💜<br>هنا حيث تكون الأمور أبسط ما يكون</p>
+        <button class="login-btn" style="width:280px; margin-bottom:10px" onclick="startUser()">▶ ابدأ الآن</button>
+        <button class="login-btn" style="width:280px; background:transparent; border:1px solid #7c3aed" onclick="go('s-login')">🔐 دخول المشرف</button>
+    </div>
+
+    <!-- شاشة تسجيل الدخول -->
+    <div class="screen" id="s-login">
+        <div class="login-box">
+            <div style="font-size:2.5rem;margin-bottom:1rem">🔐</div>
+            <input class="pass-input" type="password" id="pass-input" placeholder="كلمة السر"/>
+            <div id="login-err" style="color:#ff6b6b;font-size:0.8rem;margin-bottom:10px"></div>
+            <button class="login-btn" onclick="checkLogin()">دخول</button>
+            <div style="margin-top:1.5rem;cursor:pointer;opacity:0.6;text-decoration:underline" onclick="go('s-welcome')">رجوع</div>
+        </div>
+    </div>
+
+    <!-- شاشة الأقسام -->
+    <div class="screen" id="s-depts">
+        <div class="max-w">
+            <div class="page-header"><button class="back-btn" onclick="goHome()">←</button><div class="page-title">الأقسام</div><div id="dept-hdr-right" style="margin-right:auto"></div></div>
+            <div style="display:flex; flex-direction:column; width:100%">
+                <div class="dept-card" onclick="openDept('ICU')"><span>🫀</span><span style="font-weight:700">ICU</span></div>
+                <div class="dept-card" onclick="openDept('ER')"><span>🚨</span><span style="font-weight:700">ER</span></div>
+                <div class="dept-card" onclick="openDept('NNICU')"><span>👶</span><span style="font-weight:700">NNICU</span></div>
+                <div class="dept-card" onclick="openDept('Ambulatory')"><span>🏥</span><span style="font-weight:700">Ambulatory Area</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الشهور -->
+    <div class="screen" id="s-months">
+        <div class="max-w">
+            <div class="page-header"><button class="back-btn" onclick="go('s-depts')">←</button><div class="page-title">اختر الشهر</div></div>
+            <div class="months-grid" id="months-grid"></div>
+        </div>
+    </div>
+
+    <!-- شاشة المحتوى -->
+    <div class="screen" id="s-month">
+        <div class="max-w">
+            <div class="page-header"><button class="back-btn" onclick="go('s-months')">←</button><div class="page-title" id="month-title"></div><div id="month-hdr-right" style="margin-right:auto"></div></div>
+            <div class="tabs"><button class="tab active" id="tab-General" onclick="switchTab('General')">General</button><button class="tab" id="tab-Specific" onclick="switchTab('Specific')">Specific</button></div>
+            <div id="month-content"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+</div>
+
+<script>
+/* ── CONFIG ── */
+const ADMIN_PASS = 'nursing2025';
+const SUPABASE_URL = 'https://pfwfhuoxmttkkwuwbcmk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmd2ZodW94bXR0a2t3dXdiY21rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTg0MDAsImV4cCI6MjA5MDAzNDQwMH0.HGOZyPnHzUBGO2Bs1Z3RX93Rww5JVvxsUbZprnMfa6A';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const BUCKET = 'materials';
+
+const MONTHS = [
+    {en:'January', ar:'يناير'}, {en:'February', ar:'فبراير'}, {en:'March', ar:'مارس'},
+    {en:'April', ar:'أبريل'}, {en:'May', ar:'مايو'}, {en:'June', ar:'يونيو'},
+    {en:'July', ar:'يوليو'}, {en:'August', ar:'أغسطس'}, {en:'September', ar:'سبتمبر'},
+    {en:'October', ar:'أكتوبر'}, {en:'November', ar:'نوفمبر'}, {en:'December', ar:'ديسمبر'}
+];
+
+const FILETYPES = [
+    {key:'record', label:'تسجيلات صوتية', icon:'🎙️', accept:'audio/*'},
+    {key:'poster', label:'بوسترات وصور',   icon:'🖼️', accept:'image/*'},
+    {key:'ppt',    label:'عروض PPT',        icon:'📊', accept:'.ppt,.pptx'},
+    {key:'video',  label:'فيديو',           icon:'🎬', accept:'video/*'},
+    {key:'exam',   label:'امتحانات',        icon:'📝', accept:''}
+];
+
+let curDept='', curMonth=0, curCat='General', isAdmin=false;
+
+/* ── NAV ── */
+function go(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    const target = document.getElementById(id);
+    if(target) target.classList.add('active');
+    window.scrollTo(0,0);
+}
+
+function goHome(){ isAdmin=false; go('s-welcome'); }
+function startUser(){ isAdmin=false; buildDepts(); go('s-depts'); }
+
+function checkLogin(){
+    if(document.getElementById('pass-input').value === ADMIN_PASS){
+        isAdmin=true; document.getElementById('pass-input').value=''; buildDepts(); go('s-depts'); showToast('✅ أهلاً بك');
+    } else { document.getElementById('login-err').textContent='❌ السر غير صحيح'; }
+}
+
+function buildDepts(){
+    document.getElementById('dept-hdr-right').innerHTML = isAdmin 
+    ? '<div class="admin-badge">👑 أدمن</div> <button class="logout-btn" onclick="goHome()">خروج</button>' : '';
+}
+
+function openDept(dept){
+    curDept = dept;
+    const g = document.getElementById('months-grid'); g.innerHTML='';
+    MONTHS.forEach((m, i) => {
+        const d = document.createElement('div'); d.className = 'month-card';
+        d.innerHTML = `<div class="month-num">${String(i+1).padStart(2,'0')}</div><div style="font-weight:700">${m.en}</div><div class="month-ar">${m.ar}</div>`;
+        d.onclick = () => openMonth(i); g.appendChild(d);
+    });
+    go('s-months');
+}
+
+function openMonth(idx){
+    curMonth = idx; curCat = 'General';
+    document.getElementById('month-title').textContent = MONTHS[idx].en;
+    document.getElementById('month-hdr-right').innerHTML = isAdmin ? '<div class="admin-badge">👑 أدمن</div>' : '';
+    renderContent(); go('s-month');
+}
+
+function switchTab(cat){ curCat = cat; document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); document.getElementById('tab-'+cat).classList.add('active'); renderContent(); }
+
+async function renderContent(){
+    const container = document.getElementById('month-content');
+    container.innerHTML = '<div style="text-align:center;padding:2rem;opacity:0.5">⏳ جاري التحميل...</div>';
+    try {
+        const topicKey = `${curDept}_${curMonth}_${curCat}`;
+        const {data:topicRow} = await sb.from('topics').select('name').eq('key', topicKey).maybeSingle();
+        const topicVal = topicRow?.name || '';
+        let html = '';
+        if(isAdmin){
+            html += `<div class="item-card"><input id="topic-input" type="text" value="${topicVal}" placeholder="عنوان الدرس..." style="width:100%;padding:10px;background:#000;color:white;border:1px solid #333;border-radius:8px;margin-bottom:8px;outline:none;font-family:Tajawal"/><button class="login-btn" onclick="saveTopic()" style="padding:5px 15px; width:auto; font-size:0.8rem">حفظ العنوان</button></div>`;
+        } else if(topicVal) {
+            html += `<div style="margin-bottom:1.2rem;padding:15px;background:rgba(139,92,246,0.1);border-radius:10px;border-right:4px solid #a855f7">📌 ${topicVal}</div>`;
+        }
+        for(const ft of FILETYPES){
+            const {data:files} = await sb.from('files_meta').select('*').eq('dept',curDept).eq('month',curMonth).eq('cat',curCat).eq('type',ft.key);
+            let filesHtml = '';
+            (files||[]).forEach(f => {
+                const delBtn = isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}','${ft.key}')" style="color:#ff6b6b;background:none;border:none;cursor:pointer;font-size:0.7rem;margin-top:5px;font-family:Tajawal">[حذف 🗑️]</button>` : '';
+                const url = f.url; 
+                if(ft.key === 'exam'){ filesHtml += `<div class="item-card"><a href="${url}" target="_blank" style="color:#c4b5fd;text-decoration:none;font-weight:bold">📝 فتح الامتحان</a> ${delBtn}</div>`; } 
+                else {
+                    if(ft.key === 'poster') filesHtml += `<div class="item-card"><img src="${url}" style="width:100%;border-radius:8px;cursor:pointer" onclick="window.open('${url}','_blank')"/> ${delBtn}</div>`;
+                    else if(ft.key === 'record') filesHtml += `<div class="item-card"><span>${f.name}</span><audio controls style="width:100%"><source src="${url}"/></audio> ${delBtn}</div>`;
+                    else if(ft.key === 'video') filesHtml += `<div class="item-card"><span>${f.name}</span><video controls style="width:100%;border-radius:8px"><source src="${url}"/></video> ${delBtn}</div>`;
+                    else if(ft.key === 'ppt') filesHtml += `<div class="item-card"><a href="${url}" style="color:#fbbf24;text-decoration:none">📊 ملف البوربوينت</a> ${delBtn}</div>`;
+                }
+            });
+            let adminAction = isAdmin ? (ft.key==='exam' ? `<div style="display:flex;gap:5px;margin-top:10px"><input id="exam-url" placeholder="رابط الامتحان" style="flex:1;background:#000;color:white;padding:8px;border:1px solid #333;border-radius:5px"/><button onclick="addExamLink()" style="background:#7c3aed;border:none;padding:5px 10px;border-radius:5px;color:white;cursor:pointer">إضافة</button></div>` : `<button class="login-btn" style="background:none; border:1px dashed #a855f7; color:#c4b5fd; margin-top:10px" onclick="document.getElementById('in-${ft.key}').click()">+ رفع ${ft.label}</button><input type="file" id="in-${ft.key}" style="display:none" onchange="uploadFile(this,'${ft.key}')" multiple/>`) : '';
+            html += `<div style="margin-bottom:2rem; padding:10px; background:rgba(255,255,255,0.02); border-radius:12px"><div style="color:#c4b5fd; font-weight:bold; margin-bottom:10px">${ft.icon} ${ft.label}</div><div>${filesHtml || '<div style="opacity:0.3; font-size:0.8rem">لا يوجد محتوى حالياً</div>'}</div>${adminAction}</div>`;
+        }
+        container.innerHTML = html;
+    } catch(e){ console.error(e); }
+}
+
+/* ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ */
+/* تعديل دالة الرفع بالاسم الآمن TIMESTAMP */
+async function uploadFile(input, type){
+    const files = [...input.files];
+    showToast('⏳ جاري الرفع...');
+    for(const f of files){
+        const ext = f.name.split('.').pop();
+        const safeName = 'file_' + Date.now() + '.' + ext;
+        const path = curDept + '/' + safeName;
+        const {error: uploadError} = await sb.storage.from(BUCKET).upload(path, f, { contentType: f.type });
+        if(!uploadError) {
+            const { data } = sb.storage.from(BUCKET).getPublicUrl(path);
+            await sb.from('files_meta').insert({
+                id: crypto.randomUUID(), dept: curDept, month: curMonth, cat: curCat, type: type, 
+                name: f.name, storage_path: path, url: data.publicUrl, size: f.size, mime: f.type
+            });
+        } else { showToast('❌ فشل الرفع'); }
+    }
+    showToast('✅ تم الرفع'); input.value = '';
+}
+
+async function saveTopic(){ await sb.from('topics').upsert({key: `${curDept}_${curMonth}_${curCat}`, name: document.getElementById('topic-input').value.trim()}); showToast('✅ تم الحفظ'); }
+async function addExamLink(){ const url = document.getElementById('exam-url').value.trim(); if(!url) return; await sb.from('files_meta').insert({ id: crypto.randomUUID(), dept:curDept, month:curMonth, cat:curCat, type:'exam', name:'Post Exam', storage_path:url, url:url }); showToast('✅ تم الحفظ'); }
+async function deleteFile(id, path, type){ if(!confirm('حذف نهائي؟')) return; await sb.from('files_meta').delete().eq('id', id); if(type !== 'exam') await sb.storage.from(BUCKET).remove([path]); showToast('🗑️ تم الحذف'); }
+
+/* ── REALTIME ── */
+sb.channel('db').on('postgres_changes', { event:'*', schema:'public', table:'files_meta' }, () => { if(document.getElementById('s-month').classList.contains('active')) renderContent(); }).subscribe();
+sb.channel('top').on('postgres_changes', { event:'*', schema:'public', table:'topics' }, () => { if(document.getElementById('s-month').classList.contains('active')) renderContent(); }).subscribe();
+
+function showToast(m){ const el=document.getElementById('toast'); el.textContent=m; el.className=`toast show`; setTimeout(()=>el.classList.remove('show'), 3000); }
+
+window.onload = () => {
+    setTimeout(() => {
+        document.getElementById('loading-screen').classList.add('hidden');
+        go('s-welcome');
+    }, 1200);
+};
+</script>
+</body>
+</html>
