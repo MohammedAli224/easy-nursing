@@ -33,7 +33,7 @@
         .screen{display:none;position:relative;z-index:10;min-height:100vh;padding:2rem 1.25rem;opacity:0;max-width:520px;margin:0 auto;}
         .screen.active{display:flex;flex-direction:column;align-items:center;opacity:1;animation:up .4s ease forwards}
 
-        /* UI Cards */
+        /* UI Elements */
         .card, .cat-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:22px;padding:1.2rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:0.3s;}
         .card:hover, .cat-card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
         
@@ -44,29 +44,27 @@
         .page-title{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#e9d5ff,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
         .months-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.75rem;width:100%}
         .month-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:18px;padding:1rem .8rem;cursor:pointer;text-align:center;transition:0.3s;}
-        .month-card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
 
-        /* Tab System Styles */
         .tab{flex:1;padding:.7rem;border:none;border-radius:10px;background:transparent;color:rgba(196,181,253,.6);cursor:pointer;font-weight:600;transition:0.3s;}
         .tab.active{background:linear-gradient(135deg,var(--p-main),var(--p-dark));color:white;}
 
-        /* Admin Components */
         .topic-box{background:rgba(139,92,246,0.1);padding:15px;border-radius:12px;border-left:4px solid var(--p-main);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;width:100%;}
+        .topic-box-text{flex:1;}
+        .topic-box-label{font-size:0.7rem;color:var(--p-light);text-transform:uppercase;letter-spacing:1px;}
+        .topic-box-title{font-weight:700;font-size:1.1rem;margin-top:4px;}
         .edit-topic-btn{background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.4);border-radius:8px;color:white;padding:5px 10px;font-size:0.75rem;cursor:pointer;}
         .admin-badge{background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;font-weight:700;color:var(--p-light);}
+        
         .link-input{width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(139,92,246,0.3);border-radius:10px;color:white;margin-bottom:8px;font-size:0.85rem;outline:none;}
-        .link-input:focus{border-color:var(--p-main);}
         .upload-zone{border:1.5px dashed rgba(139,92,246,0.3);padding:10px;border-radius:12px;text-align:center;cursor:pointer;font-size:0.75rem;color:var(--p-light);margin-bottom:10px;}
-        .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:8px;border:1px solid rgba(255,255,255,0.08);}
+        .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:8px;}
 
         /* Welcome Photo */
         .welcome-photo-wrap{width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;padding:3px;background:linear-gradient(135deg,var(--p-main),var(--p-dark),#ec4899);box-shadow:0 15px 40px rgba(139,92,246,.35);}
         .welcome-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #0f0a1e;}
 
-        /* Global UI */
         .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:.7rem 1.4rem;border-radius:50px;display:none;z-index:3000;background:var(--p-dark);color:white;font-weight:bold;white-space:nowrap;}
         .toast.show{display:block}
-        .hidden{display:none!important}
     </style>
 </head>
 <body>
@@ -101,7 +99,7 @@
         </div>
     </div>
 
-    <!-- Screen: Groups (Departments) -->
+    <!-- Screen: Departments -->
     <div class="screen" id="s-groups">
         <div style="display:flex;width:100%;align-items:center;margin-bottom:2rem;">
             <button class="back-btn" onclick="go('s-welcome')">←</button>
@@ -111,10 +109,7 @@
         <div id="groups-list" style="width:100%"></div>
     </div>
 
-    <!-- Screen: Units -->
     <div class="screen" id="s-depts"><div id="depts-list" style="width:100%"></div></div>
-
-    <!-- Screen: Months -->
     <div class="screen" id="s-months"><div class="months-grid" id="months-grid"></div></div>
 
     <!-- Screen: Content -->
@@ -129,7 +124,7 @@
 </div>
 
 <script>
-/* ===================== CORE CONFIG ===================== */
+/* ===================== CONFIG ===================== */
 const SB_URL = "https://pfwfhuoxmttkkwuwbcmk.supabase.co";
 const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmd2ZodW94bXR0a2t3dXdiY21rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTg0MDAsImV4cCI6MjA5MDAzNDQwMH0.HGOZyPnHzUBGO2Bs1Z3RX93Rww5JVvxsUbZprnMfa6A";
 const sb = supabase.createClient(SB_URL, SB_KEY);
@@ -229,7 +224,7 @@ async function renderMaterials() {
                     <div class="topic-box-label">${curTab} Topic</div>
                     <div class="topic-box-title">${title}</div>
                 </div>
-                ${isAdmin ? `<button class="edit-topic-btn" onclick="editTopicTitle('${title.replace(/'/g, "\\'")}')">✏️ Edit</button>` : ''}
+                ${isAdmin ? `<button class="edit-topic-btn" onclick="editTopicTitle('${title.replace(/'/g, "\\'")}')">✏️ Edit Title</button>` : ''}
             </div>`;
 
         const sections = [
@@ -267,7 +262,7 @@ async function renderMaterials() {
             </div>`;
         });
         area.innerHTML = html;
-    } catch(e) { console.error(e); area.innerHTML = "Error loading content."; }
+    } catch(e) { console.error(e); }
 }
 
 /* ===================== ADMIN ACTIONS (SECURED) ===================== */
@@ -281,7 +276,7 @@ async function editTopicTitle(old) {
             department_id: curDeptId, month_idx: curMonthIdx, category_id: cat.id, title: n.trim()
         }, { onConflict: 'department_id,month_idx,category_id' });
         showToast("✅ Title Updated"); renderMaterials();
-    } catch(e) { console.error(e); showToast("❌ Update Failed"); }
+    } catch(e) { showToast("❌ Update Failed"); }
 }
 
 async function addLinkAction(type) {
@@ -301,9 +296,17 @@ async function uploadAction(input, type) {
     if(!isAdmin) return;
     const file = input.files[0]; if(!file) return;
     showToast("⏳ Uploading...");
-    const path = `materials/${curDeptName}/${curTab}/${Date.now()}_${file.name}`;
+    
+    // استخدام curDeptId لضمان مسار آمن للملفات
+    const cleanName = file.name.replace(/[^\x00-\x7F]/g, "_").replace(/\s+/g, "_");
+    const path = `materials/${curDeptId}/${curTab}/${Date.now()}_${cleanName}`;
+    
     try {
-        const { error: sErr } = await sb.storage.from('materials').upload(path, file);
+        const { error: sErr } = await sb.storage.from('materials').upload(path, file, {
+            cacheControl: '3600',
+            upsert: true 
+        });
+        
         if(!sErr) {
             const { data: urlData } = sb.storage.from('materials').getPublicUrl(path);
             const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
@@ -311,6 +314,8 @@ async function uploadAction(input, type) {
                 title: file.name, url: urlData.publicUrl, type: type, department_id: curDeptId, category_id: cat.id, month_idx: curMonthIdx, storage_path: path
             });
             showToast("✅ Uploaded"); renderMaterials();
+        } else {
+            showToast(`❌ Error: ${sErr.message}`);
         }
     } catch(e) { showToast("❌ Upload Error"); }
 }
@@ -318,13 +323,18 @@ async function uploadAction(input, type) {
 async function deleteFile(id, path) {
     if(!isAdmin || !confirm("Are you sure?")) return;
     try {
-        await sb.from('materials').delete().eq('id', id);
-        if(path) await sb.storage.from('materials').remove([path]);
-        showToast("🗑️ Deleted"); renderMaterials();
-    } catch(e) { showToast("❌ Delete Failed"); }
+        const { error: dbErr } = await sb.from('materials').delete().eq('id', id);
+        if(!dbErr) {
+            if(path && path !== "null") {
+                await sb.storage.from('materials').remove([path]);
+            }
+            showToast("🗑️ Deleted"); renderMaterials();
+        } else {
+            showToast(`❌ Delete Failed: ${dbErr.message}`);
+        }
+    } catch(e) { showToast("❌ Critical Error"); }
 }
 
-/* ===================== HELPERS ===================== */
 function showToast(m) { 
     const t = document.getElementById('toast'); 
     t.innerText = m; t.className = "toast show"; 
