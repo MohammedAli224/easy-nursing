@@ -20,7 +20,6 @@
         body{background:var(--bg); color:white; min-height:100vh; overflow-x:hidden;}
         .app{background:radial-gradient(ellipse at 20% 50%,#1a0533 0%,#0f0a1e 50%,#0a1628 100%); min-height:100vh; position:relative;}
 
-        /* Background Orbs */
         .orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
         .orb1{width:400px;height:400px;background:rgba(139,92,246,.15);top:-100px;right:-100px;animation:f1 8s infinite}
         .orb2{width:300px;height:300px;background:rgba(59,130,246,.1);bottom:-50px;left:-50px;animation:f2 10s infinite}
@@ -29,11 +28,9 @@
         @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
         @keyframes spin{to{transform:rotate(360deg)}}
 
-        /* Screen States */
         .screen{display:none;position:relative;z-index:10;min-height:100vh;padding:2rem 1.25rem;opacity:0;max-width:520px;margin:0 auto;}
         .screen.active{display:flex;flex-direction:column;align-items:center;opacity:1;animation:up .4s ease forwards}
 
-        /* UI Elements */
         .card, .cat-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:22px;padding:1.2rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:0.3s;}
         .card:hover, .cat-card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
         
@@ -44,7 +41,7 @@
         .page-title{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#e9d5ff,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
         .months-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.75rem;width:100%}
         .month-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:18px;padding:1rem .8rem;cursor:pointer;text-align:center;transition:0.3s;}
-
+        
         .tab{flex:1;padding:.7rem;border:none;border-radius:10px;background:transparent;color:rgba(196,181,253,.6);cursor:pointer;font-weight:600;transition:0.3s;}
         .tab.active{background:linear-gradient(135deg,var(--p-main),var(--p-dark));color:white;}
 
@@ -59,12 +56,14 @@
         .upload-zone{border:1.5px dashed rgba(139,92,246,0.3);padding:10px;border-radius:12px;text-align:center;cursor:pointer;font-size:0.75rem;color:var(--p-light);margin-bottom:10px;}
         .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:8px;}
 
-        /* Welcome Photo */
         .welcome-photo-wrap{width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;padding:3px;background:linear-gradient(135deg,var(--p-main),var(--p-dark),#ec4899);box-shadow:0 15px 40px rgba(139,92,246,.35);}
         .welcome-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #0f0a1e;}
 
         .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:.7rem 1.4rem;border-radius:50px;display:none;z-index:3000;background:var(--p-dark);color:white;font-weight:bold;white-space:nowrap;}
         .toast.show{display:block}
+
+        /* ✅ الحل: الكلاس المفقود لإخفاء العناصر */
+        .hidden{display:none !important}
     </style>
 </head>
 <body>
@@ -73,6 +72,7 @@
     <div class="orb orb1"></div><div class="orb orb2"></div>
     <div id="toast" class="toast"></div>
 
+    <!-- Loading Screen -->
     <div id="loading-screen" style="position:fixed;inset:0;background:#0f0a1e;display:flex;align-items:center;justify-content:center;z-index:500;">
         <div style="width:40px;height:40px;border:3px solid rgba(139,92,246,0.3);border-top-color:#a855f7;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
     </div>
@@ -89,7 +89,7 @@
         <button class="btn" style="width:260px;background:transparent;border:1px solid var(--p-main)" onclick="go('s-login')">🔐 Admin Access</button>
     </div>
 
-    <!-- Screen: Login -->
+    <!-- باقي الشاشات -->
     <div class="screen" id="s-login">
         <div style="background:var(--glass);padding:2rem;border-radius:24px;text-align:center;width:100%;max-width:340px;">
             <div style="font-size:2.5rem;margin-bottom:1rem;">🔐</div>
@@ -99,7 +99,6 @@
         </div>
     </div>
 
-    <!-- Screen: Departments -->
     <div class="screen" id="s-groups">
         <div style="display:flex;width:100%;align-items:center;margin-bottom:2rem;">
             <button class="back-btn" onclick="go('s-welcome')">←</button>
@@ -112,7 +111,6 @@
     <div class="screen" id="s-depts"><div id="depts-list" style="width:100%"></div></div>
     <div class="screen" id="s-months"><div class="months-grid" id="months-grid"></div></div>
 
-    <!-- Screen: Content -->
     <div class="screen" id="s-content">
         <div id="content-header-area" style="width:100%"></div>
         <div style="width:100%;display:flex;gap:10px;margin-bottom:20px;background:rgba(255,255,255,.03);border-radius:14px;padding:5px;">
@@ -257,12 +255,12 @@ async function renderMaterials() {
                         <input type="text" id="u-in-${sec.id}" class="link-input" placeholder="URL">
                         <button class="btn" style="padding:6px;font-size:0.75rem;margin-bottom:8px" onclick="addLinkAction('${sec.id}')">🔗 Add Link</button>
                         <div class="upload-zone" onclick="document.getElementById('up-${sec.id}').click()">📁 Or Upload File</div>
-                        <input type="file" id="up-${sec.id}" style="display:none" onchange="uploadAction(this,'${sec.id}')">
+                        <input type="file" id="up-${sec.id}" style="display:none" multiple onchange="uploadAction(this,'${sec.id}')">
                     </div>` : ''}
             </div>`;
         });
         area.innerHTML = html;
-    } catch(e) { console.error(e); }
+    } catch(e) { console.error(e); area.innerHTML = "Error loading content."; }
 }
 
 /* ===================== ADMIN ACTIONS (SECURED) ===================== */
@@ -276,7 +274,7 @@ async function editTopicTitle(old) {
             department_id: curDeptId, month_idx: curMonthIdx, category_id: cat.id, title: n.trim()
         }, { onConflict: 'department_id,month_idx,category_id' });
         showToast("✅ Title Updated"); renderMaterials();
-    } catch(e) { showToast("❌ Update Failed"); }
+    } catch(e) { console.error(e); showToast("❌ Update Failed"); }
 }
 
 async function addLinkAction(type) {
@@ -294,30 +292,28 @@ async function addLinkAction(type) {
 
 async function uploadAction(input, type) {
     if(!isAdmin) return;
-    const file = input.files[0]; if(!file) return;
-    showToast("⏳ Uploading...");
-    
-    // استخدام curDeptId لضمان مسار آمن للملفات
-    const cleanName = file.name.replace(/[^\x00-\x7F]/g, "_").replace(/\s+/g, "_");
-    const path = `materials/${curDeptId}/${curTab}/${Date.now()}_${cleanName}`;
-    
+    const files = Array.from(input.files);
+    if (files.length === 0) return;
+    showToast(`⏳ Uploading ${files.length} file(s)...`);
     try {
-        const { error: sErr } = await sb.storage.from('materials').upload(path, file, {
-            cacheControl: '3600',
-            upsert: true 
-        });
-        
-        if(!sErr) {
-            const { data: urlData } = sb.storage.from('materials').getPublicUrl(path);
-            const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
-            await sb.from('materials').insert({
-                title: file.name, url: urlData.publicUrl, type: type, department_id: curDeptId, category_id: cat.id, month_idx: curMonthIdx, storage_path: path
+        const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
+        for (const file of files) {
+            const cleanName = file.name.replace(/[^\x00-\x7F]/g, "_").replace(/\s+/g, "_");
+            const path = `materials/${curDeptId}/${curTab}/${Date.now()}_${cleanName}`;
+            const { error: sErr } = await sb.storage.from('materials').upload(path, file, {
+                cacheControl: '3600', upsert: true 
             });
-            showToast("✅ Uploaded"); renderMaterials();
-        } else {
-            showToast(`❌ Error: ${sErr.message}`);
+            if(!sErr) {
+                const { data: urlData } = sb.storage.from('materials').getPublicUrl(path);
+                await sb.from('materials').insert({
+                    title: file.name, url: urlData.publicUrl, type: type, department_id: curDeptId, category_id: cat.id, month_idx: curMonthIdx, storage_path: path
+                });
+            }
         }
-    } catch(e) { showToast("❌ Upload Error"); }
+        showToast("✅ Files uploaded!");
+        renderMaterials();
+    } catch(e) { console.error(e); showToast("❌ Upload Error"); }
+    input.value = '';
 }
 
 async function deleteFile(id, path) {
