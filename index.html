@@ -20,6 +20,7 @@
         body{background:var(--bg); color:white; min-height:100vh; overflow-x:hidden;}
         .app{background:radial-gradient(ellipse at 20% 50%,#1a0533 0%,#0f0a1e 50%,#0a1628 100%); min-height:100vh; position:relative;}
 
+        /* Background Orbs */
         .orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
         .orb1{width:400px;height:400px;background:rgba(139,92,246,.15);top:-100px;right:-100px;animation:f1 8s infinite}
         .orb2{width:300px;height:300px;background:rgba(59,130,246,.1);bottom:-50px;left:-50px;animation:f2 10s infinite}
@@ -28,123 +29,98 @@
         @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
         @keyframes spin{to{transform:rotate(360deg)}}
 
+        /* Screen States */
         .screen{display:none;position:relative;z-index:10;min-height:100vh;padding:2rem 1.25rem;opacity:0;max-width:520px;margin:0 auto;}
         .screen.active{display:flex;flex-direction:column;align-items:center;opacity:1;animation:up .4s ease forwards}
 
-        .card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:22px;padding:1.2rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:0.3s;}
-        .card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
-
-        .cat-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:22px;padding:1.4rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:0.3s;}
-        .cat-card:hover{background:rgba(139,92,246,0.15);border-color:var(--p-dark);transform:translateY(-3px);}
-        .cat-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-        .cat-count{background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);border-radius:20px;padding:2px 10px;font-size:0.72rem;color:var(--p-light);white-space:nowrap;margin-left:auto;}
-
+        /* UI Cards */
+        .card, .cat-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:22px;padding:1.2rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:0.3s;}
+        .card:hover, .cat-card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
+        
         .btn{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--p-main),var(--p-dark));border:none;border-radius:14px;color:white;font-weight:700;cursor:pointer;font-size:1rem;transition:0.3s;}
         .btn:active{transform:scale(0.97);}
-        .back-btn{width:44px;height:44px;border-radius:14px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);color:var(--p-light);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+        .back-btn{width:44px;height:44px;border-radius:14px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);color:var(--p-light);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
 
-        .page-header{display:flex;align-items:center;gap:.85rem;margin-bottom:2rem;width:100%}
         .page-title{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#e9d5ff,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-
         .months-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.75rem;width:100%}
         .month-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:18px;padding:1rem .8rem;cursor:pointer;text-align:center;transition:0.3s;}
         .month-card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
 
-        .tabs{display:flex;gap:.6rem;margin-bottom:1.5rem;background:rgba(255,255,255,.03);border-radius:14px;padding:5px;width:100%}
-        .tab{flex:1;padding:.7rem;border:none;border-radius:10px;background:transparent;color:rgba(196,181,253,.6);cursor:pointer;font-weight:600;}
+        /* Tab System Styles */
+        .tab{flex:1;padding:.7rem;border:none;border-radius:10px;background:transparent;color:rgba(196,181,253,.6);cursor:pointer;font-weight:600;transition:0.3s;}
         .tab.active{background:linear-gradient(135deg,var(--p-main),var(--p-dark));color:white;}
 
-        .section-box{background:rgba(255,255,255,0.03);border:1px solid rgba(139,92,246,0.1);border-radius:18px;padding:1.5rem;margin-bottom:1.5rem;width:100%;}
-        .section-header{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--p-light);margin-bottom:15px;font-size:1rem;}
-        
-        .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:8px;}
-        .upload-zone{margin-top:10px;border:1.5px dashed rgba(139,92,246,0.3);padding:15px;border-radius:12px;text-align:center;cursor:pointer;transition:0.3s;color:var(--p-light);font-size:0.85rem;}
-        .upload-zone:hover{background:rgba(139,92,246,0.1);border-color:var(--p-main);}
-
+        /* Admin Components */
+        .topic-box{background:rgba(139,92,246,0.1);padding:15px;border-radius:12px;border-left:4px solid var(--p-main);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;width:100%;}
+        .edit-topic-btn{background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.4);border-radius:8px;color:white;padding:5px 10px;font-size:0.75rem;cursor:pointer;}
+        .admin-badge{background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;font-weight:700;color:var(--p-light);}
         .link-input{width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(139,92,246,0.3);border-radius:10px;color:white;margin-bottom:8px;font-size:0.85rem;outline:none;}
         .link-input:focus{border-color:var(--p-main);}
+        .upload-zone{border:1.5px dashed rgba(139,92,246,0.3);padding:10px;border-radius:12px;text-align:center;cursor:pointer;font-size:0.75rem;color:var(--p-light);margin-bottom:10px;}
+        .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:8px;border:1px solid rgba(255,255,255,0.08);}
 
-        .welcome-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,10vw,3.8rem);font-weight:700;margin-bottom:1rem;text-align:center;}
+        /* Welcome Photo */
         .welcome-photo-wrap{width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;padding:3px;background:linear-gradient(135deg,var(--p-main),var(--p-dark),#ec4899);box-shadow:0 15px 40px rgba(139,92,246,.35);}
         .welcome-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #0f0a1e;}
 
-        .loading-screen{position:fixed;inset:0;z-index:500;background:#0f0a1e;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-        .hidden{display:none!important}
+        /* Global UI */
         .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:.7rem 1.4rem;border-radius:50px;display:none;z-index:3000;background:var(--p-dark);color:white;font-weight:bold;white-space:nowrap;}
         .toast.show{display:block}
-
-        .topic-box{background:rgba(139,92,246,0.1);padding:15px 18px;border-radius:12px;border-left:4px solid var(--p-main);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:10px; width:100%;}
-        .topic-box-text{flex:1;}
-        .topic-box-label{font-size:0.7rem;color:var(--p-light);text-transform:uppercase;letter-spacing:1px;}
-        .topic-box-title{font-weight:700;font-size:1.1rem;margin-top:4px;}
-        .edit-topic-btn{background:rgba(139,92,246,0.25);border:1px solid rgba(139,92,246,0.5);border-radius:8px;color:white;padding:5px 10px;font-size:0.75rem;cursor:pointer;white-space:nowrap;transition:0.2s;flex-shrink:0;}
-        .admin-badge{display:inline-flex;align-items:center;background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;font-weight:700;color:var(--p-light);margin-left:auto;}
+        .hidden{display:none!important}
     </style>
 </head>
 <body>
 
 <div class="app">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
+    <div class="orb orb1"></div><div class="orb orb2"></div>
     <div id="toast" class="toast"></div>
 
-    <div class="loading-screen" id="loading-screen">
-        <div style="width:48px;height:48px;border:3px solid rgba(139,92,246,0.3);border-top-color:#a855f7;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:1.5rem"></div>
-        <div style="color:rgba(196,181,253,0.7)">Loading...</div>
+    <div id="loading-screen" style="position:fixed;inset:0;background:#0f0a1e;display:flex;align-items:center;justify-content:center;z-index:500;">
+        <div style="width:40px;height:40px;border:3px solid rgba(139,92,246,0.3);border-top-color:#a855f7;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
     </div>
 
+    <!-- Screen: Welcome -->
     <div class="screen" id="s-welcome">
-        <h1 class="welcome-title">Easy Nursing</h1>
+        <h1 style="font-family:'Playfair Display',serif;font-size:3rem;margin-bottom:1rem;text-align:center;">Easy Nursing</h1>
         <div class="welcome-photo-wrap">
-            <img class="welcome-photo" src="./me.jpeg" alt="Ahmed Shafaay"/>
+            <img class="welcome-photo" src="https://i.ibb.co/3yZJBDfQ/image.jpg" alt="Ahmed Shafaay"/>
         </div>
-        <div style="font-size:1.1rem;margin-bottom:.5rem;font-weight:700">Ahmed Shafaay</div>
-        <p style="text-align:center;opacity:0.7;margin-bottom:2rem">Nursing Training Plan 💜<br>Excellence Simplified</p>
-        <button class="btn" style="width:280px;margin-bottom:10px" onclick="go('s-groups')">▶ Start Training</button>
-        <button class="btn" style="width:280px;background:transparent;border:1px solid var(--p-main)" onclick="go('s-login')">🔐 Admin Access</button>
+        <div style="font-weight:700;margin-bottom:.5rem;">Ahmed Shafaay</div>
+        <p style="text-align:center;opacity:0.7;margin-bottom:2rem;">Nursing Training Plan 💜<br>Excellence Simplified</p>
+        <button class="btn" style="width:260px;margin-bottom:10px" onclick="go('s-groups')">▶ Start Training</button>
+        <button class="btn" style="width:260px;background:transparent;border:1px solid var(--p-main)" onclick="go('s-login')">🔐 Admin Access</button>
     </div>
+
+    <!-- Screen: Login -->
     <div class="screen" id="s-login">
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(139,92,246,.25);border-radius:24px;padding:2rem 1.75rem;width:100%;max-width:340px;text-align:center;">
-            <div style="font-size:2.5rem;margin-bottom:1rem">🔐</div>
-            <input style="width:100%;padding:.9rem;background:rgba(139,92,246,.1);border:1.5px solid rgba(139,92,246,.3);border-radius:14px;color:white;text-align:center;letter-spacing:3px;outline:none;margin-bottom:.75rem;" type="password" id="pass-input" placeholder="Password"/>
-            <div id="login-err" style="color:#ff6b6b;font-size:0.8rem;margin-bottom:10px"></div>
+        <div style="background:var(--glass);padding:2rem;border-radius:24px;text-align:center;width:100%;max-width:340px;">
+            <div style="font-size:2.5rem;margin-bottom:1rem;">🔐</div>
+            <input type="password" id="pass-input" class="link-input" style="text-align:center;letter-spacing:4px;" placeholder="Password"/>
             <button class="btn" onclick="checkAuth()">Login</button>
-            <div style="margin-top:1.5rem;cursor:pointer;opacity:0.5;text-decoration:underline" onclick="go('s-welcome')">Back</div>
+            <p onclick="go('s-welcome')" style="margin-top:1rem;cursor:pointer;opacity:0.5;text-decoration:underline;">Back</p>
         </div>
     </div>
 
+    <!-- Screen: Groups (Departments) -->
     <div class="screen" id="s-groups">
-        <div class="page-header">
+        <div style="display:flex;width:100%;align-items:center;margin-bottom:2rem;">
             <button class="back-btn" onclick="go('s-welcome')">←</button>
-            <div class="page-title">Departments</div>
-            <div id="groups-admin-tag" style="margin-left:auto"></div>
+            <div class="page-title" style="margin-left:1rem;">Departments</div>
+            <div id="groups-admin-tag" style="margin-left:auto;"></div>
         </div>
         <div id="groups-list" style="width:100%"></div>
     </div>
 
-    <div class="screen" id="s-depts">
-        <div class="page-header">
-            <button class="back-btn" onclick="go('s-groups')">←</button>
-            <div class="page-title" id="dept-page-title">Units</div>
-        </div>
-        <div id="depts-list" style="width:100%"></div>
-    </div>
+    <!-- Screen: Units -->
+    <div class="screen" id="s-depts"><div id="depts-list" style="width:100%"></div></div>
 
-    <div class="screen" id="s-months">
-        <div class="page-header">
-            <button class="back-btn" onclick="go('s-depts')">←</button>
-            <div class="page-title">Select Month</div>
-        </div>
-        <div class="months-grid" id="months-grid"></div>
-    </div>
+    <!-- Screen: Months -->
+    <div class="screen" id="s-months"><div class="months-grid" id="months-grid"></div></div>
 
+    <!-- Screen: Content -->
     <div class="screen" id="s-content">
-        <div class="page-header">
-            <button class="back-btn" onclick="go('s-months')">←</button>
-            <div class="page-title" id="content-month-name">Plan</div>
-            <div id="content-admin-tag" style="margin-left:auto"></div>
-        </div>
-        <div class="tabs">
+        <div id="content-header-area" style="width:100%"></div>
+        <div style="width:100%;display:flex;gap:10px;margin-bottom:20px;background:rgba(255,255,255,.03);border-radius:14px;padding:5px;">
             <button class="tab active" id="tab-General" onclick="switchTab('General')">General</button>
             <button class="tab" id="tab-Specific" onclick="switchTab('Specific')">Specific</button>
         </div>
@@ -153,7 +129,7 @@
 </div>
 
 <script>
-/* ===================== CONFIGURATION ===================== */
+/* ===================== CORE CONFIG ===================== */
 const SB_URL = "https://pfwfhuoxmttkkwuwbcmk.supabase.co";
 const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmd2ZodW94bXR0a2t3dXdiY21rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTg0MDAsImV4cCI6MjA5MDAzNDQwMH0.HGOZyPnHzUBGO2Bs1Z3RX93Rww5JVvxsUbZprnMfa6A";
 const sb = supabase.createClient(SB_URL, SB_KEY);
@@ -182,11 +158,8 @@ function checkAuth(){
         isAdmin = true;
         document.getElementById('groups-admin-tag').innerHTML = '<span class="admin-badge">Admin Mode</span>';
         showToast("Welcome Ahmed!");
-        renderGroups();
-        go('s-groups');
-    } else {
-        document.getElementById('login-err').innerText = "Wrong Password!";
-    }
+        renderGroups(); go('s-groups');
+    } else { showToast("❌ Wrong Password!"); }
 }
 
 /* ===================== RENDERING ===================== */
@@ -195,34 +168,23 @@ function renderGroups() {
     list.innerHTML = "";
     Object.keys(GROUPS).forEach(key => {
         const g = GROUPS[key];
-        list.innerHTML += `
-            <div class="cat-card" onclick="loadDepts('${key}')">
-                <div class="cat-icon" style="background:${g.color}20">${g.icon}</div>
-                <div style="flex:1">
-                    <div style="font-weight:800;font-size:1rem">${key}</div>
-                    <div style="opacity:0.5;font-size:0.75rem">${g.units.join(' · ')}</div>
-                </div>
-                <span class="cat-count">${g.units.length} units</span>
-            </div>`;
+        list.innerHTML += `<div class="cat-card" onclick="loadDepts('${key}')">
+            <div class="cat-icon" style="background:${g.color}20">${g.icon}</div>
+            <div style="flex:1"><b>${key}</b><div style="opacity:0.5;font-size:0.7rem">${g.units.join(' · ')}</div></div>
+        </div>`;
     });
 }
 
 async function loadDepts(groupKey) {
-    document.getElementById('dept-page-title').innerText = groupKey;
-    const list = document.getElementById('depts-list');
-    list.innerHTML = '<p style="text-align:center;padding:1rem;opacity:0.5">Loading Units...</p>';
-    
     const { data: depts } = await sb.from('departments').select('*');
     const filtered = depts.filter(d => GROUPS[groupKey].units.includes(d.name_en));
-
-    list.innerHTML = "";
+    const list = document.getElementById('depts-list');
+    list.innerHTML = `<button class="back-btn" onclick="go('s-groups')">←</button><br><br><div class="page-title">${groupKey}</div><br>`;
     filtered.forEach(d => {
-        list.innerHTML += `
-            <div class="card" onclick="openMonths('${d.id}', '${d.name_en}')">
-                <div style="width:10px;height:10px;border-radius:50%;background:${d.color}"></div>
-                <b style="flex:1">${d.name_en}</b>
-                <span style="opacity:0.3">›</span>
-            </div>`;
+        list.innerHTML += `<div class="card" onclick="openMonths('${d.id}', '${d.name_en}')">
+            <div style="width:8px;height:8px;border-radius:50%;background:${d.color}"></div>
+            <b style="flex:1">${d.name_en}</b><span>›</span>
+        </div>`;
     });
     go('s-depts');
 }
@@ -230,52 +192,45 @@ async function loadDepts(groupKey) {
 function openMonths(id, name) {
     curDeptId = id; curDeptName = name;
     const grid = document.getElementById('months-grid');
-    grid.innerHTML = "";
+    grid.innerHTML = `<button class="back-btn" onclick="go('s-depts')">←</button><br><br><div class="page-title">${name}</div><br>`;
     MONTHS.forEach((m, i) => {
-        grid.innerHTML += `
-            <div class="month-card" onclick="openContent(${i})">
-                <div style="font-size:1.5rem;margin-bottom:5px">${EMOJIS[i]}</div>
-                <div style="font-weight:700;font-size:0.85rem">${m}</div>
-            </div>`;
+        grid.innerHTML += `<div class="month-card" onclick="openContent(${i})">
+            <div style="font-size:1.2rem">${EMOJIS[i]}</div><b>${m}</b>
+        </div>`;
     });
     go('s-months');
 }
 
 async function openContent(idx) {
     curMonthIdx = idx; curTab = 'General';
-    document.getElementById('content-month-name').innerText = MONTHS[idx];
-    document.getElementById('content-admin-tag').innerHTML = isAdmin ? '<span class="admin-badge">Admin Mode</span>' : '';
-    renderMaterials();
-    go('s-content');
+    renderMaterials(); go('s-content');
 }
 
-function switchTab(tab) {
-    curTab = tab;
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(tab === 'General' ? 'tab-General' : 'tab-Specific').classList.add('active');
-    renderMaterials();
+function switchTab(t) { 
+    curTab = t; 
+    document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`tab-${t}`).classList.add('active');
+    renderMaterials(); 
 }
 
 async function renderMaterials() {
     const area = document.getElementById('content-main-area');
-    area.innerHTML = '<p style="text-align:center;padding:2rem;opacity:0.4">⏳ Loading materials...</p>';
-
+    area.innerHTML = "<p style='text-align:center;opacity:0.5;padding:2rem;'>⏳ Loading Content...</p>";
     try {
-        const { data: catData } = await sb.from('categories').select('id').eq('name_en', curTab).single();
-        
-        const { data: headerData } = await sb.from('topic_headers')
-            .select('title')
-            .eq('department_id', curDeptId)
-            .eq('month_idx', curMonthIdx)
-            .eq('category_id', catData.id)
-            .maybeSingle();
+        const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
+        const { data: header } = await sb.from('topic_headers').select('title').eq('department_id', curDeptId).eq('month_idx', curMonthIdx).eq('category_id', cat.id).maybeSingle();
+        const { data: files } = await sb.from('materials').select('*').eq('department_id', curDeptId).eq('category_id', cat.id).eq('month_idx', curMonthIdx);
 
-        const displayTitle = headerData ? headerData.title : `${curDeptName} Learning`;
-
-        const { data: files } = await sb.from('materials').select('*')
-            .eq('department_id', curDeptId)
-            .eq('category_id', catData.id)
-            .eq('month_idx', curMonthIdx);
+        const title = header ? header.title : `${curDeptName} Learning`;
+        document.getElementById('content-header-area').innerHTML = `
+            <button class="back-btn" onclick="go('s-months')">←</button><br><br>
+            <div class="topic-box">
+                <div class="topic-box-text">
+                    <div class="topic-box-label">${curTab} Topic</div>
+                    <div class="topic-box-title">${title}</div>
+                </div>
+                ${isAdmin ? `<button class="edit-topic-btn" onclick="editTopicTitle('${title.replace(/'/g, "\\'")}')">✏️ Edit</button>` : ''}
+            </div>`;
 
         const sections = [
             { id: 'audio', label: 'Audio Records', icon: '🎙️' },
@@ -284,153 +239,104 @@ async function renderMaterials() {
             { id: 'link',  label: 'Exams & Links', icon: '📝' }
         ];
 
-        let html = `
-            <div class="topic-box">
-                <div class="topic-box-text">
-                    <div class="topic-box-label">${curTab} Topic</div>
-                    <div class="topic-box-title">${displayTitle}</div>
-                </div>
-                ${isAdmin ? `
-                    <button class="edit-topic-btn" onclick="editTopicTitle('${displayTitle.replace(/'/g, "\\'")}')">✏️ Edit Title</button>
-                ` : ''}
-            </div>`;
-        
+        let html = "";
         sections.forEach(sec => {
-            const typeFiles = (files || []).filter(f => f.type === sec.id);
-            let filesHtml = '';
-            typeFiles.forEach(f => {
-                filesHtml += `
-                    <div class="item-card">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:600; font-size:0.9rem">${f.type === 'link' ? '🔗' : ''} ${f.title}</span>
-                            <a href="${f.url}" target="_blank" style="color:var(--p-light); font-weight:bold; text-decoration:none; font-size:0.85rem">Open</a>
-                        </div>
-                        ${isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}')" style="color:#ff6b6b; background:none; border:none; font-size:0.7rem; cursor:pointer; width:fit-content">Delete 🗑️</button>` : ''}
-                    </div>`;
+            const items = (files || []).filter(f => f.type === sec.id);
+            let itemsHtml = "";
+            items.forEach(f => {
+                itemsHtml += `<div class="item-card">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:0.9rem;">${f.type==='link'?'🔗':''} ${f.title}</span>
+                        <a href="${f.url}" target="_blank" style="color:var(--p-light);font-weight:700;text-decoration:none;">Open</a>
+                    </div>
+                    ${isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}')" style="color:#ff6b6b;border:none;background:none;font-size:0.7rem;cursor:pointer;margin-top:5px;">Delete 🗑️</button>` : ''}
+                </div>`;
             });
 
-            html += `
-                <div class="section-box">
-                    <div class="section-header"><span>${sec.icon}</span> ${sec.label}</div>
-                    <div>${filesHtml || '<p style="opacity:0.2; font-size:0.8rem; margin-bottom:10px">No content yet.</p>'}</div>
-                    ${isAdmin ? `
-                        <div style="margin-top:15px; padding-top:10px; border-top: 1px solid rgba(139,92,246,0.2);">
-                            <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:10px;">
-                                <input type="text" id="title-input-${sec.id}" class="link-input" placeholder="Title (e.g. Remote ${sec.label})">
-                                <input type="text" id="url-input-${sec.id}" class="link-input" placeholder="Paste URL (https://...)">
-                                <button class="btn" style="padding:8px; font-size:0.8rem; background:linear-gradient(135deg, #4c1d95, #7c3aed);" 
-                                        onclick="addLinkAction('${sec.id}')">
-                                    🔗 Add ${sec.label} Link
-                                </button>
-                            </div>
-                            <div class="upload-zone" style="padding:10px; font-size:0.75rem;" 
-                                 onclick="document.getElementById('up-${sec.id}').click()">
-                                📁 Or Upload ${sec.label} File
-                            </div>
-                            <input type="file" id="up-${sec.id}" multiple style="display:none" 
-                                   onchange="uploadAction(this, '${sec.id}')">
-                        </div>
-                    ` : ''}
-                </div>`;
+            html += `<div class="section-box" style="background:var(--glass);padding:1.2rem;border-radius:18px;margin-bottom:1rem;">
+                <div class="section-header" style="margin-bottom:12px;font-weight:700;color:var(--p-light)">${sec.icon} ${sec.label}</div>
+                ${itemsHtml || '<p style="opacity:0.2;font-size:0.8rem">No content available.</p>'}
+                ${isAdmin ? `
+                    <div style="margin-top:15px; border-top:1px solid rgba(255,255,255,0.05); padding-top:12px;">
+                        <input type="text" id="t-in-${sec.id}" class="link-input" placeholder="Title">
+                        <input type="text" id="u-in-${sec.id}" class="link-input" placeholder="URL">
+                        <button class="btn" style="padding:6px;font-size:0.75rem;margin-bottom:8px" onclick="addLinkAction('${sec.id}')">🔗 Add Link</button>
+                        <div class="upload-zone" onclick="document.getElementById('up-${sec.id}').click()">📁 Or Upload File</div>
+                        <input type="file" id="up-${sec.id}" style="display:none" onchange="uploadAction(this,'${sec.id}')">
+                    </div>` : ''}
+            </div>`;
         });
         area.innerHTML = html;
-    } catch(e) { console.error(e); area.innerHTML = "Error loading data."; }
+    } catch(e) { console.error(e); area.innerHTML = "Error loading content."; }
 }
 
-/* ===================== ACTIONS ===================== */
-async function editTopicTitle(oldTitle) {
-    const newTitle = prompt("Enter new title for this section:", oldTitle);
-    if (newTitle === null || newTitle.trim() === "" || newTitle === oldTitle) return;
-
-    showToast("⏳ Updating Title...");
+/* ===================== ADMIN ACTIONS (SECURED) ===================== */
+async function editTopicTitle(old) {
+    if(!isAdmin) return;
+    const n = prompt("New Title:", old);
+    if(!n || n === old) return;
     try {
         const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
-        
-        // تم تصحيح الـ onConflict بإزالة المسافة بعد الفواصل
-        const { error } = await sb.from('topic_headers').upsert({
-            department_id: curDeptId,
-            month_idx: curMonthIdx,
-            category_id: cat.id,
-            title: newTitle.trim()
+        await sb.from('topic_headers').upsert({
+            department_id: curDeptId, month_idx: curMonthIdx, category_id: cat.id, title: n.trim()
         }, { onConflict: 'department_id,month_idx,category_id' });
-
-        if (!error) {
-            showToast("✅ Title updated!");
-            renderMaterials();
-        } else { throw error; }
-    } catch (e) { 
-        console.error(e);
-        showToast("❌ Error updating title"); 
-    }
+        showToast("✅ Title Updated"); renderMaterials();
+    } catch(e) { console.error(e); showToast("❌ Update Failed"); }
 }
 
 async function addLinkAction(type) {
-    const titleInput = document.getElementById(`title-input-${type}`);
-    const urlInput = document.getElementById(`url-input-${type}`);
-    
-    const title = titleInput.value.trim();
-    const url = urlInput.value.trim();
-
-    if(!title || !url) {
-        showToast("⚠️ Please enter Title and URL");
-        return;
-    }
-
-    showToast("⏳ Saving Link...");
+    if(!isAdmin) return;
+    const tIn = document.getElementById(`t-in-${type}`), uIn = document.getElementById(`u-in-${type}`);
+    if(!tIn.value || !uIn.value) return showToast("⚠️ Missing fields");
     try {
         const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
-        const { error } = await sb.from('materials').insert({
-            title: title, url: url, type: type,
-            department_id: curDeptId, category_id: cat.id, month_idx: curMonthIdx
+        await sb.from('materials').insert({
+            title: tIn.value, url: uIn.value, type: type, department_id: curDeptId, category_id: cat.id, month_idx: curMonthIdx
         });
-
-        if(!error) {
-            showToast("✅ Link Added!");
-            titleInput.value = ''; urlInput.value = '';
-            renderMaterials();
-        } else { throw error; }
-    } catch(e) { showToast("❌ Save Error"); console.error(e); }
+        showToast("✅ Link Added"); renderMaterials();
+    } catch(e) { showToast("❌ Failed"); }
 }
 
 async function uploadAction(input, type) {
-    const files = Array.from(input.files);
-    if (!files.length) return;
-    showToast(`⏳ Uploading ${files.length} files...`);
-
-    const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
-    const uploadPromises = files.map(async (f) => {
-        const path = `materials/${curDeptName}/${curTab}/${Date.now()}_${f.name}`;
-        const { error: storageErr } = await sb.storage.from('materials').upload(path, f);
-        if (!storageErr) {
+    if(!isAdmin) return;
+    const file = input.files[0]; if(!file) return;
+    showToast("⏳ Uploading...");
+    const path = `materials/${curDeptName}/${curTab}/${Date.now()}_${file.name}`;
+    try {
+        const { error: sErr } = await sb.storage.from('materials').upload(path, file);
+        if(!sErr) {
             const { data: urlData } = sb.storage.from('materials').getPublicUrl(path);
-            return sb.from('materials').insert({
-                title: f.name, url: urlData.publicUrl, type: type,
-                department_id: curDeptId, category_id: cat.id,
-                month_idx: curMonthIdx, storage_path: path
+            const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
+            await sb.from('materials').insert({
+                title: file.name, url: urlData.publicUrl, type: type, department_id: curDeptId, category_id: cat.id, month_idx: curMonthIdx, storage_path: path
             });
+            showToast("✅ Uploaded"); renderMaterials();
         }
-    });
-
-    try { await Promise.all(uploadPromises); showToast("✅ Added successfully"); renderMaterials(); } catch(e) { showToast("❌ Error uploading"); }
-    input.value = '';
+    } catch(e) { showToast("❌ Upload Error"); }
 }
 
 async function deleteFile(id, path) {
-    if (!confirm("Delete permanently?")) return;
-    await sb.from('materials').delete().eq('id', id);
-    if(path) await sb.storage.from('materials').remove([path]);
-    showToast("🗑️ Deleted");
-    renderMaterials();
+    if(!isAdmin || !confirm("Are you sure?")) return;
+    try {
+        await sb.from('materials').delete().eq('id', id);
+        if(path) await sb.storage.from('materials').remove([path]);
+        showToast("🗑️ Deleted"); renderMaterials();
+    } catch(e) { showToast("❌ Delete Failed"); }
 }
 
 /* ===================== HELPERS ===================== */
-function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "toast show"; setTimeout(() => t.className = "toast", 3000); }
+function showToast(m) { 
+    const t = document.getElementById('toast'); 
+    t.innerText = m; t.className = "toast show"; 
+    setTimeout(() => t.className = "toast", 3000); 
+}
 
-sb.channel('sync').on('postgres_changes', { event: '*', schema: 'public', table: 'materials' }, () => {
-    if (document.getElementById('s-content').classList.contains('active')) renderMaterials();
-}).subscribe();
-
-window.onload = () => { setTimeout(() => { document.getElementById('loading-screen').classList.add('hidden'); renderGroups(); go('s-welcome'); }, 1000); };
+window.onload = () => { 
+    setTimeout(() => { 
+        document.getElementById('loading-screen').classList.add('hidden'); 
+        renderGroups(); go('s-welcome'); 
+    }, 1000); 
+};
 </script>
 </body>
 </html>
