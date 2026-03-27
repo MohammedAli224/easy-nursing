@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <title>Easy Nursing | Training Plan 2026</title>
+    <title>Easy Nursing | Training Plan</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -54,18 +54,15 @@
         .tab{flex:1;padding:.7rem;border:none;border-radius:10px;background:transparent;color:rgba(196,181,253,.6);cursor:pointer;font-weight:600;}
         .tab.active{background:linear-gradient(135deg,var(--p-main),var(--p-dark));color:white;}
 
-        .section-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(139,92,246,0.1); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; width: 100%; }
-        .section-header { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--p-light); margin-bottom: 15px; font-size: 1rem; }
+        .section-box{background:rgba(255,255,255,0.03);border:1px solid rgba(139,92,246,0.1);border-radius:18px;padding:1.5rem;margin-bottom:1.5rem;width:100%;}
+        .section-header{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--p-light);margin-bottom:15px;font-size:1rem;}
         
         .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:8px;}
-        .upload-zone { margin-top: 10px; border: 1.5px dashed rgba(139,92,246,0.3); padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; color: var(--p-light); font-size: 0.85rem; }
-        .upload-zone:hover { background: rgba(139,92,246,0.1); border-color: var(--p-main); }
+        .upload-zone{margin-top:10px;border:1.5px dashed rgba(139,92,246,0.3);padding:15px;border-radius:12px;text-align:center;cursor:pointer;transition:0.3s;color:var(--p-light);font-size:0.85rem;}
+        .upload-zone:hover{background:rgba(139,92,246,0.1);border-color:var(--p-main);}
 
-        /* ستايل خانات إدخال الروابط */
-        .link-input { width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(139,92,246,0.3); border-radius: 10px; color: white; margin-bottom: 8px; font-size: 0.85rem; outline: none; }
-        .link-input:focus { border-color: var(--p-main); }
-
-        .admin-badge{display:inline-flex;align-items:center;background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;font-weight:700;color:var(--p-light);margin-left:auto;}
+        .link-input{width:100%;padding:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(139,92,246,0.3);border-radius:10px;color:white;margin-bottom:8px;font-size:0.85rem;outline:none;}
+        .link-input:focus{border-color:var(--p-main);}
 
         .welcome-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,10vw,3.8rem);font-weight:700;margin-bottom:1rem;text-align:center;}
         .welcome-photo-wrap{width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;padding:3px;background:linear-gradient(135deg,var(--p-main),var(--p-dark),#ec4899);box-shadow:0 15px 40px rgba(139,92,246,.35);}
@@ -75,6 +72,13 @@
         .hidden{display:none!important}
         .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:.7rem 1.4rem;border-radius:50px;display:none;z-index:3000;background:var(--p-dark);color:white;font-weight:bold;white-space:nowrap;}
         .toast.show{display:block}
+
+        .topic-box{background:rgba(139,92,246,0.1);padding:15px 18px;border-radius:12px;border-left:4px solid var(--p-main);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:10px; width:100%;}
+        .topic-box-text{flex:1;}
+        .topic-box-label{font-size:0.7rem;color:var(--p-light);text-transform:uppercase;letter-spacing:1px;}
+        .topic-box-title{font-weight:700;font-size:1.1rem;margin-top:4px;}
+        .edit-topic-btn{background:rgba(139,92,246,0.25);border:1px solid rgba(139,92,246,0.5);border-radius:8px;color:white;padding:5px 10px;font-size:0.75rem;cursor:pointer;white-space:nowrap;transition:0.2s;flex-shrink:0;}
+        .admin-badge{display:inline-flex;align-items:center;background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;font-weight:700;color:var(--p-light);margin-left:auto;}
     </style>
 </head>
 <body>
@@ -95,7 +99,7 @@
             <img class="welcome-photo" src="https://i.ibb.co/3yZJBDfQ/image.jpg" alt="Ahmed Shafaay"/>
         </div>
         <div style="font-size:1.1rem;margin-bottom:.5rem;font-weight:700">Ahmed Shafaay</div>
-        <p style="text-align:center;opacity:0.7;margin-bottom:2rem">Nursing Training Plan 2026 💜<br>Excellence Simplified</p>
+        <p style="text-align:center;opacity:0.7;margin-bottom:2rem">Nursing Training Plan 💜<br>Excellence Simplified</p>
         <button class="btn" style="width:280px;margin-bottom:10px" onclick="go('s-groups')">▶ Start Training</button>
         <button class="btn" style="width:280px;background:transparent;border:1px solid var(--p-main)" onclick="go('s-login')">🔐 Admin Access</button>
     </div>
@@ -162,7 +166,7 @@ const GROUPS = {
     "Internship": { icon: "🎓", color: "#fbbf24", units: ["Internship"] }
 };
 
-const MONTHS = ["Jan-26","Feb-26","Mar-26","Apr-26","May-26","Jun-26","Jul-26","Aug-26","Sep-26","Oct-26","Nov-26","Dec-26"];
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const EMOJIS = ["❄️","💙","🌸","🌼","🌿","☀️","🌊","🍃","🍂","🎃","🍁","🎄"];
 
 let curDeptId = '', curDeptName = '', curMonthIdx = 0, curTab = 'General', isAdmin = false;
@@ -186,6 +190,7 @@ function checkAuth(){
     }
 }
 
+/* ===================== RENDERING ===================== */
 function renderGroups() {
     const list = document.getElementById('groups-list');
     list.innerHTML = "";
@@ -258,6 +263,16 @@ async function renderMaterials() {
 
     try {
         const { data: catData } = await sb.from('categories').select('id').eq('name_en', curTab).single();
+        
+        const { data: headerData } = await sb.from('topic_headers')
+            .select('title')
+            .eq('department_id', curDeptId)
+            .eq('month_idx', curMonthIdx)
+            .eq('category_id', catData.id)
+            .maybeSingle();
+
+        const displayTitle = headerData ? headerData.title : `${curDeptName} Learning`;
+
         const { data: files } = await sb.from('materials').select('*')
             .eq('department_id', curDeptId)
             .eq('category_id', catData.id)
@@ -266,20 +281,24 @@ async function renderMaterials() {
         const sections = [
             { id: 'audio', label: 'Audio Records', icon: '🎙️' },
             { id: 'video', label: 'Video Lessons', icon: '🎬' },
-            { id: 'pdf',   label: 'Documents & PPT', icon: '📊' },
+            { id: 'pdf',   label: 'Posters', icon: '🖼️' },
             { id: 'link',  label: 'Exams & Links', icon: '📝' }
         ];
 
         let html = `
-            <div style="background:rgba(139,92,246,0.1);padding:15px;border-radius:12px;border-left:4px solid var(--p-main);margin-bottom:20px">
-                <div style="font-size:0.7rem;color:var(--p-light);text-transform:uppercase;letter-spacing:1px">${curTab} Topic</div>
-                <div style="font-weight:700;font-size:1.1rem;margin-top:4px">${curDeptName} Learning</div>
+            <div class="topic-box">
+                <div class="topic-box-text">
+                    <div class="topic-box-label">${curTab} Topic</div>
+                    <div class="topic-box-title">${displayTitle}</div>
+                </div>
+                ${isAdmin ? `
+                    <button class="edit-topic-btn" onclick="editTopicTitle('${displayTitle.replace(/'/g, "\\'")}')">✏️ Edit Title</button>
+                ` : ''}
             </div>`;
         
         sections.forEach(sec => {
             const typeFiles = (files || []).filter(f => f.type === sec.id);
             let filesHtml = '';
-            
             typeFiles.forEach(f => {
                 filesHtml += `
                     <div class="item-card">
@@ -295,20 +314,24 @@ async function renderMaterials() {
                 <div class="section-box">
                     <div class="section-header"><span>${sec.icon}</span> ${sec.label}</div>
                     <div>${filesHtml || '<p style="opacity:0.2; font-size:0.8rem; margin-bottom:10px">No content yet.</p>'}</div>
-                    ${isAdmin ? (
-                        sec.id === 'link' ? `
-                            <!-- واجهة إضافة الروابط يدوياً للأدمن -->
-                            <div style="margin-top:10px; display:flex; flex-direction:column; gap:5px;">
-                                <input type="text" id="link-title-input" class="link-input" placeholder="Exam/Link Title (e.g. MCQ Test)">
-                                <input type="text" id="link-url-input" class="link-input" placeholder="Paste Link (https://...)">
-                                <button class="btn" style="padding:8px; font-size:0.8rem" onclick="addLinkAction()">+ Add External Link</button>
+                    ${isAdmin ? `
+                        <div style="margin-top:15px; padding-top:10px; border-top: 1px solid rgba(139,92,246,0.2);">
+                            <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:10px;">
+                                <input type="text" id="title-input-${sec.id}" class="link-input" placeholder="Title (e.g. Remote ${sec.label})">
+                                <input type="text" id="url-input-${sec.id}" class="link-input" placeholder="Paste URL (https://...)">
+                                <button class="btn" style="padding:8px; font-size:0.8rem; background:linear-gradient(135deg, #4c1d95, #7c3aed);" 
+                                        onclick="addLinkAction('${sec.id}')">
+                                    🔗 Add ${sec.label} Link
+                                </button>
                             </div>
-                        ` : `
-                            <!-- واجهة الرفع العادية لبقية الأقسام -->
-                            <div class="upload-zone" onclick="document.getElementById('up-${sec.id}').click()">+ Upload ${sec.label}</div>
-                            <input type="file" id="up-${sec.id}" multiple style="display:none" onchange="uploadAction(this, '${sec.id}')">
-                        `
-                    ) : ''}
+                            <div class="upload-zone" style="padding:10px; font-size:0.75rem;" 
+                                 onclick="document.getElementById('up-${sec.id}').click()">
+                                📁 Or Upload ${sec.label} File
+                            </div>
+                            <input type="file" id="up-${sec.id}" multiple style="display:none" 
+                                   onchange="uploadAction(this, '${sec.id}')">
+                        </div>
+                    ` : ''}
                 </div>`;
         });
         area.innerHTML = html;
@@ -316,11 +339,36 @@ async function renderMaterials() {
 }
 
 /* ===================== ACTIONS ===================== */
+async function editTopicTitle(oldTitle) {
+    const newTitle = prompt("Enter new title for this section:", oldTitle);
+    if (newTitle === null || newTitle.trim() === "" || newTitle === oldTitle) return;
 
-// دالة إضافة الروابط الخارجية (جديدة)
-async function addLinkAction() {
-    const titleInput = document.getElementById('link-title-input');
-    const urlInput = document.getElementById('link-url-input');
+    showToast("⏳ Updating Title...");
+    try {
+        const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
+        
+        // تم تصحيح الـ onConflict بإزالة المسافة بعد الفواصل
+        const { error } = await sb.from('topic_headers').upsert({
+            department_id: curDeptId,
+            month_idx: curMonthIdx,
+            category_id: cat.id,
+            title: newTitle.trim()
+        }, { onConflict: 'department_id,month_idx,category_id' });
+
+        if (!error) {
+            showToast("✅ Title updated!");
+            renderMaterials();
+        } else { throw error; }
+    } catch (e) { 
+        console.error(e);
+        showToast("❌ Error updating title"); 
+    }
+}
+
+async function addLinkAction(type) {
+    const titleInput = document.getElementById(`title-input-${type}`);
+    const urlInput = document.getElementById(`url-input-${type}`);
+    
     const title = titleInput.value.trim();
     const url = urlInput.value.trim();
 
@@ -330,26 +378,19 @@ async function addLinkAction() {
     }
 
     showToast("⏳ Saving Link...");
-    const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
+    try {
+        const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
+        const { error } = await sb.from('materials').insert({
+            title: title, url: url, type: type,
+            department_id: curDeptId, category_id: cat.id, month_idx: curMonthIdx
+        });
 
-    const { error } = await sb.from('materials').insert({
-        title: title,
-        url: url,
-        type: 'link', // النوع رابط
-        department_id: curDeptId,
-        category_id: cat.id,
-        month_idx: curMonthIdx
-    });
-
-    if(!error) {
-        showToast("✅ Link Added!");
-        titleInput.value = '';
-        urlInput.value = '';
-        renderMaterials();
-    } else {
-        showToast("❌ Save Error");
-        console.error(error);
-    }
+        if(!error) {
+            showToast("✅ Link Added!");
+            titleInput.value = ''; urlInput.value = '';
+            renderMaterials();
+        } else { throw error; }
+    } catch(e) { showToast("❌ Save Error"); console.error(e); }
 }
 
 async function uploadAction(input, type) {
@@ -358,15 +399,13 @@ async function uploadAction(input, type) {
     showToast(`⏳ Uploading ${files.length} files...`);
 
     const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
-
     const uploadPromises = files.map(async (f) => {
-        const path = `2026/${curDeptName}/${curTab}/${Date.now()}_${f.name}`;
+        const path = `materials/${curDeptName}/${curTab}/${Date.now()}_${f.name}`;
         const { error: storageErr } = await sb.storage.from('materials').upload(path, f);
         if (!storageErr) {
             const { data: urlData } = sb.storage.from('materials').getPublicUrl(path);
             return sb.from('materials').insert({
-                title: f.name, url: urlData.publicUrl,
-                type: type,
+                title: f.name, url: urlData.publicUrl, type: type,
                 department_id: curDeptId, category_id: cat.id,
                 month_idx: curMonthIdx, storage_path: path
             });
