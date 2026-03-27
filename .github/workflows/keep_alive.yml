@@ -1,0 +1,20 @@
+name: Keep Supabase Awake
+
+on:
+  schedule:
+    # بيشتغل كل 3 أيام الساعة 12 بالليل
+    - cron: '0 0 */3 * *'
+  workflow_dispatch: # زرار يدوي للتجربة الفورية
+
+jobs:
+  ping_supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase API
+        run: |
+          curl -X GET "${{ secrets.SUPABASE_URL }}/rest/v1/departments?select=*" \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+          --fail \
+          && echo "✅ Supabase is alive!" \
+          || echo "⚠️ Ping failed - check your secrets"
