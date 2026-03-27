@@ -1,0 +1,38 @@
+name: Supabase Daily Backup
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # كل يوم الساعة 2 الفجر
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Create Backup Directory
+        run: mkdir -p supabase/backups
+
+      - name: Dump Database
+        run: |
+          supabase db dump \
+            --db-url "${{ secrets.SUPABASE_DB_URL }}" \
+            -f supabase/backups/backup-$(date +%Y-%m-%d).sql
+          echo "✅ Backup created: backup-$(date +%Y-%m-%d).sql"
+
+      - name: Commit Backup to Repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🗄️ Supabase Backup - $(date +%Y-%m-%d)"
+          file_pattern: "supabase/backups/*.sql"
