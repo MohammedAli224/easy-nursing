@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <title>Easy Nursing | Ahmed Shafaay</title>
+    <title>Easy Nursing | Training Plan 2026</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     
     <style>
@@ -14,69 +16,60 @@
         body{background:var(--bg); color:white; min-height:100vh; overflow-x:hidden;}
         .app{background:radial-gradient(ellipse at 20% 50%,#1a0533 0%,#0f0a1e 50%,#0a1628 100%); min-height:100vh; position:relative;}
 
-        /* Orbs */
+        /* Background Animated Orbs */
         .orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
         .orb1{width:400px;height:400px;background:rgba(139,92,246,.15);top:-100px;right:-100px;animation:f1 8s infinite}
         .orb2{width:300px;height:300px;background:rgba(59,130,246,.1);bottom:-50px;left:-50px;animation:f2 10s infinite}
         @keyframes f1{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,20px)}}
         @keyframes f2{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
-        @keyframes spin{to{transform:rotate(360deg)}}
         @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes spin{to{transform:rotate(360deg)}}
 
-        /* Screens */
+        /* Screens Logic */
         .screen{display:none;position:relative;z-index:10;min-height:100vh;padding:2rem 1.25rem;opacity:0;max-width:520px;margin:0 auto;}
         .screen.active{display:flex;flex-direction:column;align-items:center;opacity:1;animation:up .4s ease forwards}
 
-        /* Cards */
+        /* UI Components */
         .card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:22px;padding:1.2rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:0.3s;}
         .card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
 
-        /* Category Cards */
         .cat-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:22px;padding:1.4rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:0.3s;}
         .cat-card:hover{background:rgba(139,92,246,0.15);border-color:var(--p-dark);transform:translateY(-3px);}
         .cat-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
         .cat-count{background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);border-radius:20px;padding:2px 10px;font-size:0.72rem;color:#c4b5fd;white-space:nowrap;margin-left:auto;}
 
-        /* Buttons */
         .btn{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--p-main),var(--p-dark));border:none;border-radius:14px;color:white;font-weight:700;cursor:pointer;font-size:1rem;transition:0.3s;}
         .btn:active{transform:scale(0.97);}
         .back-btn{width:44px;height:44px;border-radius:14px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);color:#c4b5fd;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
 
-        /* Page Header */
         .page-header{display:flex;align-items:center;gap:.85rem;margin-bottom:2rem;width:100%}
         .page-title{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#e9d5ff,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
-        /* Months Grid */
         .months-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.75rem;width:100%}
         .month-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:18px;padding:1rem .8rem;cursor:pointer;text-align:center;transition:0.3s;}
         .month-card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
 
-        /* Tabs */
         .tabs{display:flex;gap:.6rem;margin-bottom:1.5rem;background:rgba(255,255,255,.03);border-radius:14px;padding:5px;width:100%}
         .tab{flex:1;padding:.7rem;border:none;border-radius:10px;background:transparent;color:rgba(196,181,253,.6);cursor:pointer;font-weight:600;}
         .tab.active{background:linear-gradient(135deg,var(--p-main),var(--p-dark));color:white;}
 
-        /* File items */
         .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:8px;}
-        
-        /* Admin Badge */
         .admin-badge{display:inline-flex;align-items:center;background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;font-weight:700;color:#c4b5fd;margin-left:auto;}
-        .logout-btn{padding:5px 12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.4);border-radius:50px;color:#f87171;font-size:0.75rem;font-weight:700;cursor:pointer;}
 
-        /* Loading & Toast */
+        /* Welcome Screen Extras */
+        .welcome-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,10vw,3.8rem);font-weight:700;margin-bottom:1rem;text-align:center;}
+        .welcome-photo-wrap{width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;padding:3px;background:linear-gradient(135deg,var(--p-main),var(--p-dark),#ec4899);box-shadow:0 15px 40px rgba(139,92,246,.35);}
+        .welcome-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #0f0a1e;}
+
+        /* Utility */
         .loading-screen{position:fixed;inset:0;z-index:500;background:#0f0a1e;display:flex;flex-direction:column;align-items:center;justify-content:center;}
         .hidden{display:none!important}
         .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:.7rem 1.4rem;border-radius:50px;display:none;z-index:3000;background:var(--p-dark);color:white;font-weight:bold;white-space:nowrap;}
         .toast.show{display:block}
-
-        /* Welcome Styles */
-        .welcome-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,10vw,3.8rem);font-weight:700;margin-bottom:1rem;text-align:center;}
-        .welcome-photo-wrap{width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;padding:3px;background:linear-gradient(135deg,var(--p-main),var(--p-dark),#ec4899);box-shadow:0 15px 40px rgba(139,92,246,.35);}
-        .welcome-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #0f0a1e;}
-        .pass-input{width:100%;padding:.9rem 1.1rem;background:rgba(139,92,246,.1);border:1.5px solid rgba(139,92,246,.3);border-radius:14px;color:white;text-align:center;letter-spacing:3px;outline:none;font-family:Tajawal;font-size:1rem;margin-bottom:.75rem;}
     </style>
 </head>
 <body>
+
 <div class="app">
     <div class="orb orb1"></div>
     <div class="orb orb2"></div>
@@ -88,23 +81,23 @@
         <div style="color:rgba(196,181,253,0.7)">Loading...</div>
     </div>
 
-    <!-- 1. Welcome -->
+    <!-- 1. Welcome Screen -->
     <div class="screen" id="s-welcome">
         <h1 class="welcome-title">Easy Nursing</h1>
         <div class="welcome-photo-wrap">
             <img class="welcome-photo" src="https://ui-avatars.com/api/?name=Ahmed+Shafaay&background=7c3aed&color=fff&size=200" alt="Ahmed Shafaay"/>
         </div>
         <div style="font-size:1.1rem;margin-bottom:.5rem;font-weight:700">Ahmed Shafaay</div>
-        <p style="text-align:center;opacity:0.7;margin-bottom:2rem">Welcome to my world 💜<br>Training Plan 2026</p>
-        <button class="btn" style="width:280px;margin-bottom:10px" onclick="go('s-groups')">▶ Start Now</button>
-        <button class="btn" style="width:280px;background:transparent;border:1px solid var(--p-main)" onclick="go('s-login')">🔐 Admin Login</button>
+        <p style="text-align:center;opacity:0.7;margin-bottom:2rem">Nursing Training Plan 2026 💜<br>Excellence Simplified</p>
+        <button class="btn" style="width:280px;margin-bottom:10px" onclick="go('s-groups')">▶ Start Training</button>
+        <button class="btn" style="width:280px;background:transparent;border:1px solid var(--p-main)" onclick="go('s-login')">🔐 Admin Access</button>
     </div>
 
     <!-- 2. Admin Login -->
     <div class="screen" id="s-login">
         <div style="background:rgba(255,255,255,.05);border:1px solid rgba(139,92,246,.25);border-radius:24px;padding:2rem 1.75rem;width:100%;max-width:340px;text-align:center;">
             <div style="font-size:2.5rem;margin-bottom:1rem">🔐</div>
-            <input class="pass-input" type="password" id="pass-input" placeholder="Password"/>
+            <input style="width:100%;padding:.9rem;background:rgba(139,92,246,.1);border:1.5px solid rgba(139,92,246,.3);border-radius:14px;color:white;text-align:center;letter-spacing:3px;outline:none;margin-bottom:.75rem;" type="password" id="pass-input" placeholder="Password"/>
             <div id="login-err" style="color:#ff6b6b;font-size:0.8rem;margin-bottom:10px"></div>
             <button class="btn" onclick="checkAuth()">Login</button>
             <div style="margin-top:1.5rem;cursor:pointer;opacity:0.5;text-decoration:underline" onclick="go('s-welcome')">Back</div>
@@ -115,15 +108,13 @@
     <div class="screen" id="s-groups">
         <div class="page-header">
             <button class="back-btn" onclick="go('s-welcome')">←</button>
-            <div class="page-title">Training Plan</div>
+            <div class="page-title">Departments</div>
             <div id="groups-admin-tag" style="margin-left:auto"></div>
         </div>
-        <div id="groups-list" style="width:100%">
-            <!-- Categories defined in JS -->
-        </div>
+        <div id="groups-list" style="width:100%"></div>
     </div>
 
-    <!-- 4. Departments (Units) -->
+    <!-- 4. Sub-Departments (Units) -->
     <div class="screen" id="s-depts">
         <div class="page-header">
             <button class="back-btn" onclick="go('s-groups')">←</button>
@@ -145,7 +136,7 @@
     <div class="screen" id="s-content">
         <div class="page-header">
             <button class="back-btn" onclick="go('s-months')">←</button>
-            <div class="page-title" id="content-month-name">Month Content</div>
+            <div class="page-title" id="content-month-name">Plan</div>
             <div id="content-admin-tag" style="margin-left:auto"></div>
         </div>
         
@@ -154,31 +145,29 @@
             <button class="tab" id="tab-Specific" onclick="switchTab('Specific')">Specific</button>
         </div>
 
-        <div id="content-main-area" style="width:100%">
-            <!-- Dynamic Content -->
-        </div>
+        <div id="content-main-area" style="width:100%"></div>
     </div>
 </div>
 
 <script>
-/* --- CONFIGURATION --- */
+/* ===================== CONFIGURATION ===================== */
 const SB_URL = "https://pfwfhuoxmttkkwuwbcmk.supabase.co";
 const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBmd2ZodW94bXR0a2t3dXdiY21rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NTg0MDAsImV4cCI6MjA5MDAzNDQwMH0.HGOZyPnHzUBGO2Bs1Z3RX93Rww5JVvxsUbZprnMfa6A";
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
-const CATEGORIES = {
+const GROUPS = {
     "Critical Care": { icon: "🏥", color: "#f87171", units: ["ICU", "ER", "NNICU", "BMT"] },
     "General Wards": { icon: "🏨", color: "#60a5fa", units: ["Inpatient"] },
-    "Ambulatory Area": { icon: "🚶", color: "#34d399", units: ["OPD", "Endoscopy", "KTU", "Chemo", "Cath Lab", "Linear"] },
-    "Internship": { icon: "🎓", color: "#fbbf24", units: ["Internship Program"] }
+    "Ambulatory Area": { icon: "🚶", color: "#34d399", units: ["OPD", "Endoscopy Unit", "KTU", "Chemotherapy Unit", "Cath Lab", "Linear Unit"] },
+    "Internship": { icon: "🎓", color: "#fbbf24", units: ["Internship"] }
 };
 
 const MONTHS = ["Jan-26","Feb-26","Mar-26","Apr-26","May-26","Jun-26","Jul-26","Aug-26","Sep-26","Oct-26","Nov-26","Dec-26"];
-const MONTH_ICONS = ["❄️","💙","🌸","🌼","🌿","☀️","🌊","🍃","🍂","🎃","🍁","🎄"];
+const EMOJIS = ["❄️","💙","🌸","🌼","🌿","☀️","🌊","🍃","🍂","🎃","🍁","🎄"];
 
-let curCat = "", curUnit = "", curMonthIdx = 0, curTab = "General", isAdmin = false;
+let curDeptId = '', curDeptName = '', curMonthIdx = 0, curTab = 'General', isAdmin = false;
 
-/* --- NAVIGATION --- */
+/* ===================== NAVIGATION ===================== */
 function go(id){
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -186,202 +175,189 @@ function go(id){
 }
 
 function checkAuth(){
-    const input = document.getElementById('pass-input').value;
-    if(input === 'nursing2026'){
+    if(document.getElementById('pass-input').value === 'nursing2026'){
         isAdmin = true;
         document.getElementById('groups-admin-tag').innerHTML = '<span class="admin-badge">Admin Mode</span>';
-        showToast("Welcome Ahmed Shafaay!");
+        showToast("Welcome Ahmed!");
         renderGroups();
         go('s-groups');
     } else {
-        document.getElementById('login-err').textContent = "Incorrect password";
+        document.getElementById('login-err').innerText = "Wrong Password!";
     }
 }
 
-function goHome(){ isAdmin = false; renderGroups(); go('s-welcome'); }
-
-/* --- RENDERING --- */
+/* ===================== RENDERING ===================== */
 function renderGroups() {
     const list = document.getElementById('groups-list');
     list.innerHTML = "";
-    Object.keys(CATEGORIES).forEach(key => {
-        const cat = CATEGORIES[key];
+    Object.keys(GROUPS).forEach(key => {
+        const g = GROUPS[key];
         list.innerHTML += `
             <div class="cat-card" onclick="loadDepts('${key}')">
-                <div class="cat-icon" style="background:${cat.color}25">${cat.icon}</div>
+                <div class="cat-icon" style="background:${g.color}20">${g.icon}</div>
                 <div style="flex:1">
                     <div style="font-weight:800;font-size:1rem">${key}</div>
-                    <div style="opacity:0.5;font-size:0.78rem;margin-top:3px">${cat.units.join(' · ')}</div>
+                    <div style="opacity:0.5;font-size:0.75rem">${g.units.join(' · ')}</div>
                 </div>
-                <span class="cat-count">${cat.units.length} units</span>
+                <span class="cat-count">${g.units.length} units</span>
             </div>`;
     });
 }
 
-function loadDepts(catKey) {
-    curCat = catKey;
-    document.getElementById('dept-page-title').innerText = catKey;
+async function loadDepts(groupKey) {
+    document.getElementById('dept-page-title').innerText = groupKey;
     const list = document.getElementById('depts-list');
+    list.innerHTML = '<p style="text-align:center;padding:1rem;opacity:0.5">Loading Units...</p>';
+    
+    const { data: depts } = await sb.from('departments').select('*');
+    const filtered = depts.filter(d => GROUPS[groupKey].units.includes(d.name_en));
+
     list.innerHTML = "";
-    CATEGORIES[catKey].units.forEach(unit => {
+    filtered.forEach(d => {
         list.innerHTML += `
-            <div class="card" onclick="openMonths('${unit}')">
-                <div style="width:8px;height:8px;border-radius:50%;background:${CATEGORIES[catKey].color}"></div>
-                <b style="flex:1">${unit}</b>
+            <div class="card" onclick="openMonths('${d.id}', '${d.name_en}')">
+                <div style="width:10px;height:10px;border-radius:50%;background:${d.color}"></div>
+                <b style="flex:1">${d.name_en}</b>
                 <span style="opacity:0.3">›</span>
             </div>`;
     });
     go('s-depts');
 }
 
-function openMonths(unitName) {
-    curUnit = unitName;
+function openMonths(id, name) {
+    curDeptId = id; curDeptName = name;
     const grid = document.getElementById('months-grid');
     grid.innerHTML = "";
     MONTHS.forEach((m, i) => {
         grid.innerHTML += `
             <div class="month-card" onclick="openContent(${i})">
-                <div style="font-size:1.4rem;margin-bottom:5px">${MONTH_ICONS[i]}</div>
+                <div style="font-size:1.5rem;margin-bottom:5px">${EMOJIS[i]}</div>
                 <div style="font-weight:700;font-size:0.85rem">${m}</div>
             </div>`;
     });
     go('s-months');
 }
 
-function openContent(idx) {
-    curMonthIdx = idx; curTab = "General";
+async function openContent(idx) {
+    curMonthIdx = idx; curTab = 'General';
     document.getElementById('content-month-name').innerText = MONTHS[idx];
     document.getElementById('content-admin-tag').innerHTML = isAdmin ? '<span class="admin-badge">Admin Mode</span>' : '';
-    renderContentArea();
+    renderMaterials();
     go('s-content');
 }
 
-function switchTab(tab){
+function switchTab(tab) {
     curTab = tab;
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-'+tab).classList.add('active');
-    renderContentArea();
+    document.getElementById('tab-' + tab).classList.add('active');
+    renderMaterials();
 }
 
-async function renderContentArea() {
-    const container = document.getElementById('content-main-area');
-    container.innerHTML = '<div style="text-align:center;padding:2rem;opacity:0.4">⏳ Loading materials...</div>';
+async function renderMaterials() {
+    const area = document.getElementById('content-main-area');
+    area.innerHTML = '<p style="text-align:center;padding:2rem;opacity:0.4">⏳ Loading materials...</p>';
 
     try {
-        // 1. Get Topic Title
-        const topicKey = `${curUnit}_${curMonthIdx}_${curTab}`;
-        const { data: topicData } = await sb.from('topics').select('name').eq('key', topicKey).maybeSingle();
-        const title = topicData?.name || "No title set";
-
-        // 2. Get Files
-        const { data: files } = await sb.from('files_meta')
-            .select('*')
-            .eq('dept', curUnit).eq('month', curMonthIdx).eq('cat', curTab);
-
-        let html = "";
+        const { data: catData } = await sb.from('categories').select('id').eq('name_en', curTab).single();
         
-        // Topic Title Section
-        if(isAdmin) {
-            html += `<div class="item-card">
-                <div style="font-size:0.7rem;opacity:0.6;margin-bottom:5px">TOPIC TITLE:</div>
-                <input id="topic-input" class="pass-input" style="letter-spacing:0;text-align:left;margin:0" value="${title}" placeholder="Lesson name..."/>
-                <button class="btn" onclick="saveTopic()" style="margin-top:10px;padding:8px">Save Title</button>
+        const { data: files } = await sb.from('materials').select('*')
+            .eq('department_id', curDeptId)
+            .eq('category_id', catData.id)
+            .eq('month_idx', curMonthIdx);
+
+        let html = `
+            <div style="background:rgba(139,92,246,0.1);padding:15px;border-radius:12px;border-left:4px solid var(--p-main);margin-bottom:20px">
+                <div style="font-size:0.7rem;color:var(--p-light);text-transform:uppercase;letter-spacing:1px">${curTab} Topic</div>
+                <div style="font-weight:700;font-size:1.1rem;margin-top:4px">${curDeptName} Learning</div>
             </div>`;
+        
+        if (files && files.length > 0) {
+            files.forEach(f => {
+                const icon = f.type === 'video' ? '🎬' : (f.type === 'audio' ? '🎙️' : '📄');
+                html += `
+                    <div class="item-card">
+                        <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+                            <span style="font-weight:600">${icon} ${f.title}</span>
+                            <a href="${f.url}" target="_blank" style="color:var(--p-light);text-decoration:none;font-weight:700">Open</a>
+                        </div>
+                        ${isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}')" style="color:#ff6b6b;background:none;border:none;font-size:0.7rem;cursor:pointer;width:fit-content;margin-top:5px">Delete 🗑️</button>` : ''}
+                    </div>`;
+            });
         } else {
-            html += `<div style="background:rgba(139,92,246,0.1);padding:15px;border-radius:12px;border-left:4px solid var(--p-main);margin-bottom:20px">
-                <div style="font-size:0.7rem;color:var(--p-light);text-transform:uppercase;letter-spacing:1px">Current Topic</div>
-                <div style="font-weight:700;font-size:1.1rem;margin-top:4px">${title}</div>
-            </div>`;
+            html += '<p style="text-align:center;opacity:0.2;padding:20px">No materials available yet.</p>';
         }
 
-        // Files Section
-        const fileTypes = [
-            { id: 'record', label: 'Audio Records', icon: '🎙️' },
-            { id: 'poster', label: 'Images/Posters', icon: '🖼️' },
-            { id: 'ppt',    label: 'Presentations', icon: '📊' },
-            { id: 'video',  label: 'Videos', icon: '🎬' },
-            { id: 'exam',   label: 'Post-Exam', icon: '📝' }
-        ];
-
-        fileTypes.forEach(ft => {
-            const list = (files || []).filter(f => f.type === ft.id);
-            let filesHtml = "";
-            list.forEach(f => {
-                const del = isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}')" style="color:#ff6b6b;background:none;border:none;cursor:pointer;font-size:0.7rem">Delete</button>` : "";
-                
-                if(ft.id === 'record') filesHtml += `<div class="item-card"><span>${f.name}</span><audio controls style="width:100%;height:35px"><source src="${f.url}"/></audio>${del}</div>`;
-                else if(ft.id === 'poster') filesHtml += `<div class="item-card"><img src="${f.url}" style="width:100%;border-radius:8px" onclick="window.open('${f.url}')"/>${del}</div>`;
-                else if(ft.id === 'video') filesHtml += `<div class="item-card"><span>${f.name}</span><video controls style="width:100%;border-radius:8px"><source src="${f.url}"/></video>${del}</div>`;
-                else filesHtml += `<div class="item-card"><a href="${f.url}" target="_blank" style="color:var(--p-light);text-decoration:none;font-weight:700">🔗 Open ${ft.label}</a>${del}</div>`;
-            });
-
+        if (isAdmin) {
             html += `
-                <div style="margin-bottom:2rem">
-                    <div style="font-weight:700;color:var(--p-light);margin-bottom:10px">${ft.icon} ${ft.label}</div>
-                    ${filesHtml || '<div style="opacity:0.2;font-size:0.8rem">No materials available</div>'}
-                    ${isAdmin ? `<button class="btn" style="background:transparent;border:1px dashed var(--p-main);margin-top:10px;font-size:0.8rem" onclick="document.getElementById('in-${ft.id}').click()">+ Upload ${ft.label}</button><input type="file" id="in-${ft.id}" multiple style="display:none" onchange="uploadFiles(this,'${ft.id}')"/>` : ""}
+                <div style="margin-top:20px;border:2px dashed var(--p-main);padding:20px;border-radius:15px;text-align:center">
+                    <input type="file" id="file-in" multiple style="display:none" onchange="uploadAction(this)">
+                    <button class="btn" style="background:transparent;border:1px solid var(--p-main)" onclick="document.getElementById('file-in').click()">+ Upload Files (Incremental)</button>
                 </div>`;
-        });
+        }
 
-        container.innerHTML = html;
-    } catch(e) { console.error(e); }
+        area.innerHTML = html;
+    } catch(e) { console.error(e); area.innerHTML = "Error loading data."; }
 }
 
-/* --- SUPABASE ACTIONS --- */
-async function saveTopic() {
-    const val = document.getElementById('topic-input').value.trim();
-    const key = `${curUnit}_${curMonthIdx}_${curTab}`;
-    showToast("Saving...");
-    await sb.from('topics').upsert({ key: key, name: val });
-    showToast("✅ Title Saved");
-}
-
-async function uploadFiles(input, type) {
+/* ===================== ACTIONS ===================== */
+async function uploadAction(input) {
     const files = Array.from(input.files);
-    if(!files.length) return;
+    if (!files.length) return;
     showToast(`⏳ Uploading ${files.length} files...`);
 
-    const uploads = files.map(async (f) => {
-        const safeName = `2026_${Date.now()}_${Math.random().toString(36).substr(2, 5)}_${f.name}`;
-        const path = `${curUnit}/${safeName}`;
+    const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
+
+    const uploadPromises = files.map(async (f) => {
+        const path = `2026/${curDeptName}/${Date.now()}_${f.name}`;
         const { error } = await sb.storage.from('materials').upload(path, f);
-        if(!error) {
-            const { data } = sb.storage.from('materials').getPublicUrl(path);
-            return sb.from('files_meta').insert({
-                id: crypto.randomUUID(), dept: curUnit, month: curMonthIdx, cat: curTab,
-                type: type, name: f.name, storage_path: path, url: data.publicUrl
+        if (!error) {
+            const { data: urlData } = sb.storage.from('materials').getPublicUrl(path);
+            return sb.from('materials').insert({
+                title: f.name,
+                url: urlData.publicUrl,
+                type: f.type.includes('video') ? 'video' : (f.type.includes('audio') ? 'audio' : 'pdf'),
+                department_id: curDeptId,
+                category_id: cat.id,
+                month_idx: curMonthIdx,
+                storage_path: path
             });
         }
     });
 
-    await Promise.all(uploads);
-    showToast("✅ Upload Complete");
-    renderContentArea();
+    try {
+        await Promise.all(uploadPromises);
+        showToast("✅ Added successfully");
+        renderMaterials();
+    } catch(e) { showToast("❌ Error uploading"); }
+    input.value = '';
 }
 
 async function deleteFile(id, path) {
-    if(!confirm("Are you sure?")) return;
-    await sb.from('files_meta').delete().eq('id', id);
+    if (!confirm("Delete this file permanently?")) return;
+    await sb.from('materials').delete().eq('id', id);
     if(path) await sb.storage.from('materials').remove([path]);
     showToast("🗑️ Deleted");
-    renderContentArea();
+    renderMaterials();
 }
 
-/* --- HELPERS --- */
-function showToast(m){ const t = document.getElementById('toast'); t.innerText = m; t.className="toast show"; setTimeout(()=>t.className="toast", 3000); }
+/* ===================== REAL-TIME & HELPERS ===================== */
+sb.channel('materials_sync')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'materials' }, (payload) => {
+    if (document.getElementById('s-content').classList.contains('active')) {
+        renderMaterials();
+        showToast("🔔 Content Updated!");
+    }
+  }).subscribe();
+
+function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "toast show"; setTimeout(() => t.className = "toast", 3000); }
 
 window.onload = () => {
     setTimeout(() => {
         document.getElementById('loading-screen').classList.add('hidden');
         renderGroups();
         go('s-welcome');
-    }, 1200);
+    }, 1000);
 };
-
-/* Real-time sync */
-sb.channel('any').on('postgres_changes', { event: '*', schema: 'public', table: 'files_meta' }, () => {
-    if(document.getElementById('s-content').classList.contains('active')) renderContentArea();
-}).subscribe();
 </script>
 </body>
 </html>
