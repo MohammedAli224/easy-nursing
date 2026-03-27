@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <title>Easy Nursing | Training Plan 2026</title>
     
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
-    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     
     <style>
-        :root { --p-main: #7c3aed; --p-dark: #a855f7; --bg: #0f0a1e; --glass: rgba(255,255,255,0.04); }
+        :root { 
+            --p-main: #7c3aed; 
+            --p-dark: #a855f7; 
+            --p-light: #c4b5fd; 
+            --bg: #0f0a1e; 
+            --glass: rgba(255,255,255,0.04); 
+        }
         *{box-sizing:border-box;margin:0;padding:0; font-family:'Tajawal',sans-serif;}
         body{background:var(--bg); color:white; min-height:100vh; overflow-x:hidden;}
         .app{background:radial-gradient(ellipse at 20% 50%,#1a0533 0%,#0f0a1e 50%,#0a1628 100%); min-height:100vh; position:relative;}
@@ -36,11 +40,11 @@
         .cat-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:22px;padding:1.4rem;cursor:pointer;display:flex;align-items:center;gap:1rem;width:100%;margin-bottom:.75rem;transition:0.3s;}
         .cat-card:hover{background:rgba(139,92,246,0.15);border-color:var(--p-dark);transform:translateY(-3px);}
         .cat-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-        .cat-count{background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);border-radius:20px;padding:2px 10px;font-size:0.72rem;color:#c4b5fd;white-space:nowrap;margin-left:auto;}
+        .cat-count{background:rgba(139,92,246,0.2);border:1px solid rgba(139,92,246,0.3);border-radius:20px;padding:2px 10px;font-size:0.72rem;color:var(--p-light);white-space:nowrap;margin-left:auto;}
 
         .btn{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--p-main),var(--p-dark));border:none;border-radius:14px;color:white;font-weight:700;cursor:pointer;font-size:1rem;transition:0.3s;}
         .btn:active{transform:scale(0.97);}
-        .back-btn{width:44px;height:44px;border-radius:14px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);color:#c4b5fd;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+        .back-btn{width:44px;height:44px;border-radius:14px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);color:var(--p-light);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
 
         .page-header{display:flex;align-items:center;gap:.85rem;margin-bottom:2rem;width:100%}
         .page-title{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#e9d5ff,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -49,12 +53,19 @@
         .month-card{background:var(--glass);border:1px solid rgba(139,92,246,0.2);border-radius:18px;padding:1rem .8rem;cursor:pointer;text-align:center;transition:0.3s;}
         .month-card:hover{background:rgba(139,92,246,0.1);border-color:var(--p-dark);transform:translateY(-3px);}
 
+        /* Tabs & Sections */
         .tabs{display:flex;gap:.6rem;margin-bottom:1.5rem;background:rgba(255,255,255,.03);border-radius:14px;padding:5px;width:100%}
         .tab{flex:1;padding:.7rem;border:none;border-radius:10px;background:transparent;color:rgba(196,181,253,.6);cursor:pointer;font-weight:600;}
         .tab.active{background:linear-gradient(135deg,var(--p-main),var(--p-dark));color:white;}
 
-        .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:8px;}
-        .admin-badge{display:inline-flex;align-items:center;background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;font-weight:700;color:#c4b5fd;margin-left:auto;}
+        .section-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(139,92,246,0.1); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; width: 100%; }
+        .section-header { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--p-light); margin-bottom: 15px; font-size: 1rem; }
+        
+        .item-card{background:var(--glass);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:8px;}
+        .upload-zone { margin-top: 10px; border: 1.5px dashed rgba(139,92,246,0.3); padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; color: var(--p-light); font-size: 0.85rem; }
+        .upload-zone:hover { background: rgba(139,92,246,0.1); border-color: var(--p-main); }
+
+        .admin-badge{display:inline-flex;align-items:center;background:rgba(124,58,237,.25);border:1px solid rgba(139,92,246,.4);border-radius:20px;padding:.2rem .7rem;font-size:.72rem;font-weight:700;color:var(--p-light);margin-left:auto;}
 
         /* Welcome Screen Extras */
         .welcome-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,10vw,3.8rem);font-weight:700;margin-bottom:1rem;text-align:center;}
@@ -75,13 +86,11 @@
     <div class="orb orb2"></div>
     <div id="toast" class="toast"></div>
 
-    <!-- Loading Screen -->
     <div class="loading-screen" id="loading-screen">
         <div style="width:48px;height:48px;border:3px solid rgba(139,92,246,0.3);border-top-color:#a855f7;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:1.5rem"></div>
         <div style="color:rgba(196,181,253,0.7)">Loading...</div>
     </div>
 
-    <!-- 1. Welcome Screen -->
     <div class="screen" id="s-welcome">
         <h1 class="welcome-title">Easy Nursing</h1>
         <div class="welcome-photo-wrap">
@@ -93,7 +102,6 @@
         <button class="btn" style="width:280px;background:transparent;border:1px solid var(--p-main)" onclick="go('s-login')">🔐 Admin Access</button>
     </div>
 
-    <!-- 2. Admin Login -->
     <div class="screen" id="s-login">
         <div style="background:rgba(255,255,255,.05);border:1px solid rgba(139,92,246,.25);border-radius:24px;padding:2rem 1.75rem;width:100%;max-width:340px;text-align:center;">
             <div style="font-size:2.5rem;margin-bottom:1rem">🔐</div>
@@ -104,7 +112,6 @@
         </div>
     </div>
 
-    <!-- 3. Categories (Main Groups) -->
     <div class="screen" id="s-groups">
         <div class="page-header">
             <button class="back-btn" onclick="go('s-welcome')">←</button>
@@ -114,7 +121,6 @@
         <div id="groups-list" style="width:100%"></div>
     </div>
 
-    <!-- 4. Sub-Departments (Units) -->
     <div class="screen" id="s-depts">
         <div class="page-header">
             <button class="back-btn" onclick="go('s-groups')">←</button>
@@ -123,7 +129,6 @@
         <div id="depts-list" style="width:100%"></div>
     </div>
 
-    <!-- 5. Months Grid -->
     <div class="screen" id="s-months">
         <div class="page-header">
             <button class="back-btn" onclick="go('s-depts')">←</button>
@@ -132,19 +137,16 @@
         <div class="months-grid" id="months-grid"></div>
     </div>
 
-    <!-- 6. Content Screen -->
     <div class="screen" id="s-content">
         <div class="page-header">
             <button class="back-btn" onclick="go('s-months')">←</button>
             <div class="page-title" id="content-month-name">Plan</div>
             <div id="content-admin-tag" style="margin-left:auto"></div>
         </div>
-        
         <div class="tabs">
             <button class="tab active" id="tab-General" onclick="switchTab('General')">General</button>
             <button class="tab" id="tab-Specific" onclick="switchTab('Specific')">Specific</button>
         </div>
-
         <div id="content-main-area" style="width:100%"></div>
     </div>
 </div>
@@ -185,6 +187,8 @@ function checkAuth(){
         document.getElementById('login-err').innerText = "Wrong Password!";
     }
 }
+
+function goHome(){ isAdmin = false; renderGroups(); go('s-welcome'); }
 
 /* ===================== RENDERING ===================== */
 function renderGroups() {
@@ -249,7 +253,7 @@ async function openContent(idx) {
 function switchTab(tab) {
     curTab = tab;
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById(tab === 'General' ? 'tab-General' : 'tab-Specific').classList.add('active');
     renderMaterials();
 }
 
@@ -259,11 +263,17 @@ async function renderMaterials() {
 
     try {
         const { data: catData } = await sb.from('categories').select('id').eq('name_en', curTab).single();
-        
         const { data: files } = await sb.from('materials').select('*')
             .eq('department_id', curDeptId)
             .eq('category_id', catData.id)
             .eq('month_idx', curMonthIdx);
+
+        const sections = [
+            { id: 'audio', label: 'Audio Records', icon: '🎙️' },
+            { id: 'video', label: 'Video Lessons', icon: '🎬' },
+            { id: 'pdf',   label: 'Documents & PPT', icon: '📊' },
+            { id: 'link',  label: 'Exams & Links', icon: '📝' }
+        ];
 
         let html = `
             <div style="background:rgba(139,92,246,0.1);padding:15px;border-radius:12px;border-left:4px solid var(--p-main);margin-bottom:20px">
@@ -271,36 +281,36 @@ async function renderMaterials() {
                 <div style="font-weight:700;font-size:1.1rem;margin-top:4px">${curDeptName} Learning</div>
             </div>`;
         
-        if (files && files.length > 0) {
-            files.forEach(f => {
-                const icon = f.type === 'video' ? '🎬' : (f.type === 'audio' ? '🎙️' : '📄');
-                html += `
+        sections.forEach(sec => {
+            const typeFiles = (files || []).filter(f => f.type === sec.id);
+            let filesHtml = '';
+            typeFiles.forEach(f => {
+                filesHtml += `
                     <div class="item-card">
-                        <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
-                            <span style="font-weight:600">${icon} ${f.title}</span>
-                            <a href="${f.url}" target="_blank" style="color:var(--p-light);text-decoration:none;font-weight:700">Open</a>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-weight:600; font-size:0.9rem">${f.title}</span>
+                            <a href="${f.url}" target="_blank" style="color:var(--p-light); font-weight:bold; text-decoration:none; font-size:0.85rem">Open</a>
                         </div>
-                        ${isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}')" style="color:#ff6b6b;background:none;border:none;font-size:0.7rem;cursor:pointer;width:fit-content;margin-top:5px">Delete 🗑️</button>` : ''}
+                        ${isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}')" style="color:#ff6b6b; background:none; border:none; font-size:0.7rem; cursor:pointer; width:fit-content">Delete 🗑️</button>` : ''}
                     </div>`;
             });
-        } else {
-            html += '<p style="text-align:center;opacity:0.2;padding:20px">No materials available yet.</p>';
-        }
 
-        if (isAdmin) {
             html += `
-                <div style="margin-top:20px;border:2px dashed var(--p-main);padding:20px;border-radius:15px;text-align:center">
-                    <input type="file" id="file-in" multiple style="display:none" onchange="uploadAction(this)">
-                    <button class="btn" style="background:transparent;border:1px solid var(--p-main)" onclick="document.getElementById('file-in').click()">+ Upload Files (Incremental)</button>
+                <div class="section-box">
+                    <div class="section-header"><span>${sec.icon}</span> ${sec.label}</div>
+                    <div>${filesHtml || '<p style="opacity:0.2; font-size:0.8rem; margin-bottom:10px">No content yet.</p>'}</div>
+                    ${isAdmin ? `
+                        <div class="upload-zone" onclick="document.getElementById('up-${sec.id}').click()">+ Upload ${sec.label}</div>
+                        <input type="file" id="up-${sec.id}" multiple style="display:none" onchange="uploadAction(this, '${sec.id}')">
+                    ` : ''}
                 </div>`;
-        }
-
+        });
         area.innerHTML = html;
     } catch(e) { console.error(e); area.innerHTML = "Error loading data."; }
 }
 
 /* ===================== ACTIONS ===================== */
-async function uploadAction(input) {
+async function uploadAction(input, type) {
     const files = Array.from(input.files);
     if (!files.length) return;
     showToast(`⏳ Uploading ${files.length} files...`);
@@ -308,56 +318,40 @@ async function uploadAction(input) {
     const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
 
     const uploadPromises = files.map(async (f) => {
-        const path = `2026/${curDeptName}/${Date.now()}_${f.name}`;
-        const { error } = await sb.storage.from('materials').upload(path, f);
-        if (!error) {
+        const path = `2026/${curDeptName}/${curTab}/${Date.now()}_${f.name}`;
+        const { error: storageErr } = await sb.storage.from('materials').upload(path, f);
+        if (!storageErr) {
             const { data: urlData } = sb.storage.from('materials').getPublicUrl(path);
             return sb.from('materials').insert({
-                title: f.name,
-                url: urlData.publicUrl,
-                type: f.type.includes('video') ? 'video' : (f.type.includes('audio') ? 'audio' : 'pdf'),
-                department_id: curDeptId,
-                category_id: cat.id,
-                month_idx: curMonthIdx,
-                storage_path: path
+                title: f.name, url: urlData.publicUrl,
+                type: type,
+                department_id: curDeptId, category_id: cat.id,
+                month_idx: curMonthIdx, storage_path: path
             });
         }
     });
 
-    try {
-        await Promise.all(uploadPromises);
-        showToast("✅ Added successfully");
-        renderMaterials();
-    } catch(e) { showToast("❌ Error uploading"); }
+    try { await Promise.all(uploadPromises); showToast("✅ Added successfully"); renderMaterials(); } catch(e) { showToast("❌ Error uploading"); }
     input.value = '';
 }
 
 async function deleteFile(id, path) {
-    if (!confirm("Delete this file permanently?")) return;
+    if (!confirm("Delete permanently?")) return;
     await sb.from('materials').delete().eq('id', id);
     if(path) await sb.storage.from('materials').remove([path]);
     showToast("🗑️ Deleted");
     renderMaterials();
 }
 
-/* ===================== REAL-TIME & HELPERS ===================== */
-sb.channel('materials_sync')
-  .on('postgres_changes', { event: '*', schema: 'public', table: 'materials' }, (payload) => {
-    if (document.getElementById('s-content').classList.contains('active')) {
-        renderMaterials();
-        showToast("🔔 Content Updated!");
-    }
-  }).subscribe();
-
+/* ===================== HELPERS ===================== */
 function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.className = "toast show"; setTimeout(() => t.className = "toast", 3000); }
 
-window.onload = () => {
-    setTimeout(() => {
-        document.getElementById('loading-screen').classList.add('hidden');
-        renderGroups();
-        go('s-welcome');
-    }, 1000);
-};
+// Real-time Update
+sb.channel('sync').on('postgres_changes', { event: '*', schema: 'public', table: 'materials' }, () => {
+    if (document.getElementById('s-content').classList.contains('active')) renderMaterials();
+}).subscribe();
+
+window.onload = () => { setTimeout(() => { document.getElementById('loading-screen').classList.add('hidden'); renderGroups(); go('s-welcome'); }, 1000); };
 </script>
 </body>
 </html>
