@@ -16,23 +16,17 @@ jobs:
       - name: Create Backup Directory
         run: mkdir -p backups
 
-      - name: Force IPv4 for Supabase host
-        run: |
-          IPV4=$(getent ahostsv4 db.pfwfhuoxmttkkwuwbcmk.supabase.co | head -1 | awk '{print $1}')
-          echo "Resolved IPv4: $IPV4"
-          echo "$IPV4 db.pfwfhuoxmttkkwuwbcmk.supabase.co" | sudo tee -a /etc/hosts
-
       - name: Install postgresql-client
         run: sudo apt-get install -y postgresql-client
 
-      - name: Dump Database
+      - name: Dump Database via Session Pooler (IPv4)
         env:
           PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
         run: |
           pg_dump \
-            -h db.pfwfhuoxmttkkwuwbcmk.supabase.co \
+            -h aws-0-eu-central-1.pooler.supabase.com \
             -p 5432 \
-            -U postgres \
+            -U postgres.pfwfhuoxmttkkwuwbcmk \
             -d postgres \
             --no-password \
             -f backups/backup_$(date +%Y%m%d_%H%M%S).sql
