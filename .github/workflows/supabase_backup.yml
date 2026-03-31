@@ -19,14 +19,22 @@ jobs:
       - name: Install postgresql-client
         run: sudo apt-get install -y postgresql-client
 
-      - name: Dump Database via Session Pooler (IPv4)
+      - name: Resolve Supabase Host to IPv4
+        run: |
+          IPV4=$(getent ahostsv4 db.pfwfhuoxmttkkwuwbcmk.supabase.co | awk '{print $1}' | head -1)
+          echo "Resolved IPv4: $IPV4"
+          echo "SUPABASE_IPV4=$IPV4" >> $GITHUB_ENV
+
+      - name: Dump Database
         env:
           PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          PGSSLMODE: require
         run: |
+          echo "Connecting to IP: $SUPABASE_IPV4"
           pg_dump \
-            -h aws-0-eu-central-1.pooler.supabase.com \
+            -h $SUPABASE_IPV4 \
             -p 5432 \
-            -U postgres.pfwfhuoxmttkkwuwbcmk \
+            -U postgres \
             -d postgres \
             --no-password \
             -f backups/backup_$(date +%Y%m%d_%H%M%S).sql
