@@ -2,11 +2,8 @@ name: Supabase Daily Backup
 
 on:
   schedule:
-    - cron: '0 2 * * *'  # كل يوم الساعة 2 الفجر
+    - cron: '0 2 * * *'
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 jobs:
   backup:
@@ -16,23 +13,35 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Supabase CLI
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
       - name: Create Backup Directory
-        run: mkdir -p supabase/backups
+        run: mkdir -p backups
+
+      - name: Force IPv4 for Supabase host
+        run: |
+          IPV4=$(getent ahostsv4 db.pfwfhuoxmttkkwuwbcmk.supabase.co | head -1 | awk '{print $1}')
+          echo "Resolved IPv4: $IPV4"
+          echo "$IPV4 db.pfwfhuoxmttkkwuwbcmk.supabase.co" | sudo tee -a /etc/hosts
+
+      - name: Install postgresql-client
+        run: sudo apt-get install -y postgresql-client
 
       - name: Dump Database
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
         run: |
-          supabase db dump \
-            --db-url "${{ secrets.SUPABASE_DB_URL }}" \
-            -f supabase/backups/backup-$(date +%Y-%m-%d).sql
-          echo "✅ Backup created: backup-$(date +%Y-%m-%d).sql"
+          pg_dump \
+            -h db.pfwfhuoxmttkkwuwbcmk.supabase.co \
+            -p 5432 \
+            -U postgres \
+            -d postgres \
+            --no-password \
+            -f backups/backup_$(date +%Y%m%d_%H%M%S).sql
+          echo "✅ Backup completed!"
 
       - name: Commit Backup to Repo
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "🗄️ Supabase Backup - $(date +%Y-%m-%d)"
-          file_pattern: "supabase/backups/*.sql"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add backups/
+          git commit -m "🗄️ Daily backup $(date +%Y-%m-%d)" || echo "No changes"
+          git push
