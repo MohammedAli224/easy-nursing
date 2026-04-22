@@ -299,7 +299,7 @@ async function uploadAction(input, type) {
         const { data: cat } = await sb.from('categories').select('id').eq('name_en', curTab).single();
         for (const file of files) {
             const cleanName = file.name.replace(/[^\x00-\x7F]/g, "_").replace(/\s+/g, "_");
-            const path = `materials/${curDeptId}/${curTab}/${Date.now()}_${cleanName}`;
+            const path = `${curDeptId}/${curTab}/${Date.now()}_${cleanName}`;
             const { error: sErr } = await sb.storage.from('materials').upload(path, file, {
                 cacheControl: '3600', upsert: true 
             });
@@ -322,7 +322,7 @@ async function deleteFile(id, path) {
         const { error: dbErr } = await sb.from('materials').delete().eq('id', id);
         if(!dbErr) {
             if(path && path !== "null") {
-                await sb.storage.from('materials').remove([path]);
+                const storagePath = path.startsWith('materials/') ? path.slice('materials/'.length) : path; await sb.storage.from('materials').remove([storagePath]);
             }
             showToast("🗑️ Deleted"); renderMaterials();
         } else {
