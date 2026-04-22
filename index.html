@@ -242,7 +242,7 @@ async function renderMaterials() {
                         <span style="font-size:0.9rem;">${f.type==='link'?'🔗':''} ${f.title}</span>
                         <a href="${f.url}" target="_blank" style="color:var(--p-light);font-weight:700;text-decoration:none;">Open</a>
                     </div>
-                    ${isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}')" style="color:#ff6b6b;border:none;background:none;font-size:0.7rem;cursor:pointer;margin-top:5px;">Delete 🗑️</button>` : ''}
+                    ${isAdmin ? `<button onclick="deleteFile('${f.id}','${f.storage_path}','${f.url}')" style="color:#ff6b6b;border:none;background:none;font-size:0.7rem;cursor:pointer;margin-top:5px;">Delete 🗑️</button>` : ''}
                 </div>`;
             });
 
@@ -316,13 +316,13 @@ async function uploadAction(input, type) {
     input.value = '';
 }
 
-async function deleteFile(id, path) {
+async function deleteFile(id, path, fileUrl) {
     if(!isAdmin || !confirm("Are you sure?")) return;
     try {
         const { error: dbErr } = await sb.from('materials').delete().eq('id', id);
         if(!dbErr) {
             if(path && path !== "null") {
-                const storagePath = path.startsWith('materials/') ? path.slice('materials/'.length) : path; await sb.storage.from('materials').remove([storagePath]);
+                let storagePath = (!path || path === 'null') ? (fileUrl ? fileUrl.split('/storage/v1/object/public/materials/')[1] : null) : (path.startsWith('materials/') ? path.slice('materials/'.length) : path); await sb.storage.from('materials').remove([storagePath]);
             }
             showToast("🗑️ Deleted"); renderMaterials();
         } else {
